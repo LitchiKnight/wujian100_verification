@@ -67,7 +67,6 @@ clean:
 	rm -rf work/* *.svshell vcs_version
 	rm -rf novas* *vpd *dump *fsdb DVEfiles verdiLog vdCovLog cm.log
 	rm -rf sharedMem.dat tr_db.log opendatabase.log core.*
-	rm -rf $(LOG_PATH)/$(COMP_LOG_DIR)/*
-	rm -rf $(LOG_PATH)/$(SIM_LOG_DIR)/*
+	rm -rf $(LOG_PATH)
 	rm -rf summary_log
 	rm -rf vericomLog work.lib*
