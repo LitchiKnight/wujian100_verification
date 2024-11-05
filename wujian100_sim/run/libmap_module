@@ -1,0 +1,6 @@
+library MCU_DUMMY ../tb/mcu_dummy.v;
+
+config lib_cfg;
+  design tb_top;
+  instance tb_top.u_top_hdl.dut.x_cpu_top liblist MCU_DUMMY;
+endconfig
