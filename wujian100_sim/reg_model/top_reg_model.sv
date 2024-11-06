@@ -1,8 +1,9 @@
 class top_reg_model extends uvm_reg_block;
   `uvm_object_utils(top_reg_model)
 
-  ral_block_dma dma;
-  ral_block_wdt wdt;
+  ral_block_dma  dma  ;
+  ral_block_wdt  wdt  ;
+  ral_block_tim0 tim0 ;
 
   function new(string name = "top_reg_model");
     super.new(name);
@@ -23,4 +24,9 @@ function void top_reg_model::build();
   wdt.configure(this, "");
   wdt.build();
   default_map.add_submap(wdt.default_map, `WDT_REG_BASE_ADDR);
+
+  tim0 = ral_block_tim0::type_id::create("tim0");
+  tim0.configure(this, "");
+  tim0.build();
+  default_map.add_submap(tim0.default_map, `TIM0_REG_BASE_ADDR);
 endfunction

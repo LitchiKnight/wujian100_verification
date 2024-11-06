@@ -1,0 +1,7 @@
+simv*
+csrc
+ucli.key
+*.log
+*.fsdb
+vc_hdrs.h
+*.swp
