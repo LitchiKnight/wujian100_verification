@@ -18,7 +18,6 @@ class wujian100_base_test extends uvm_test;
   extern virtual function void build_phase(uvm_phase phase)              ;
   extern virtual function void connect_phase(uvm_phase phase)            ;
   extern virtual function void end_of_elaboration_phase(uvm_phase phase) ;
-  extern virtual task          pre_main_phase(uvm_phase phase)           ;
   extern virtual task          main_phase(uvm_phase phase)               ;
 
   extern virtual function void create_config()                           ;
@@ -68,6 +67,7 @@ function void wujian100_base_test::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
 
   vseqr = env.vseqr;
+  install_isr();
 endfunction
 
 function void wujian100_base_test::end_of_elaboration_phase(uvm_phase phase);
@@ -75,12 +75,6 @@ function void wujian100_base_test::end_of_elaboration_phase(uvm_phase phase);
 
   uvm_top.print_topology();
 endfunction
-
-task wujian100_base_test::pre_main_phase(uvm_phase phase);
-  super.pre_main_phase(phase);
-
-  install_isr();
-endtask
 
 task wujian100_base_test::main_phase(uvm_phase phase);
   `uvm_info(get_type_name(), $sformatf("start run %s", get_name()), UVM_LOW)
@@ -147,11 +141,16 @@ function void wujian100_base_test::assign_config();
 endfunction
 
 function void wujian100_base_test::install_isr();
-  wdt_int_seq wdt_isr;
+  wdt_int_seq       wdt_isr       ;
+  tim0_tim1_int_seq tim0_tim1_isr ;
 
   wdt_isr = wdt_int_seq::type_id::create("wdt_isr");
   wdt_isr.set_sequencer(vseqr);
   env_cfg.int_cfg.install_isr(wdt_isr, 27, POSEDGE);
+
+  tim0_tim1_isr = tim0_tim1_int_seq::type_id::create("tim0_tim1_isr");
+  tim0_tim1_isr.set_sequencer(vseqr);
+  env_cfg.int_cfg.install_isr(tim0_tim1_isr, 17, POSEDGE);
 endfunction
 
 function void wujian100_base_test::create_env();

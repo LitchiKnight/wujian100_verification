@@ -5,3 +5,6 @@ ucli.key
 *.fsdb
 vc_hdrs.h
 *.swp
+novas*
+verdiLog
+
