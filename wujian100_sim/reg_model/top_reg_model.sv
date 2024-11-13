@@ -4,6 +4,7 @@ class top_reg_model extends uvm_reg_block;
   ral_block_dma  dma  ;
   ral_block_wdt  wdt  ;
   ral_block_tim0 tim0 ;
+  ral_block_pwm  pwm  ;
 
   function new(string name = "top_reg_model");
     super.new(name);
@@ -29,4 +30,9 @@ function void top_reg_model::build();
   tim0.configure(this, "");
   tim0.build();
   default_map.add_submap(tim0.default_map, `TIM0_REG_BASE_ADDR);
+
+  pwm = ral_block_pwm::type_id::create("pwm");
+  pwm.configure(this, "");
+  pwm.build();
+  default_map.add_submap(pwm.default_map, `PWM_REG_BASE_ADDR);
 endfunction
