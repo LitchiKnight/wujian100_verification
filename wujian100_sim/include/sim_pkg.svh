@@ -32,4 +32,5 @@ package sim_pkg;
   `include "../test/smoke_test/dma_smoke_test.sv"
   `include "../test/smoke_test/wdt_smoke_test.sv"
   `include "../test/smoke_test/timer_smoke_test.sv"
+  `include "../test/smoke_test/pwm_smoke_test.sv"
 endpackage
