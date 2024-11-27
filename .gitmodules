@@ -1,12 +1,12 @@
 [submodule "wujian100_open"]
 	path = wujian100_open
-	url = git@github.com:LitchiKnight/wujian100_open.git
+	url = https://github.com/XUANTIE-RV/wujian100_open.git
 [submodule "wujian100_sim/common/yuu_ahb"]
 	path = wujian100_sim/common/yuu_ahb
-	url = git@github.com:LitchiKnight/yuu_ahb.git
+	url = https://github.com/seabeam/yuu_ahb.git
 [submodule "wujian100_sim/common/yuu_int"]
 	path = wujian100_sim/common/yuu_int
-	url = git@github.com:LitchiKnight/yuu_int.git
+	url = https://github.com/seabeam/yuu_int.git
 [submodule "wujian100_sim/uvm_lib/uvm-1.2"]
 	path = wujian100_sim/uvm_lib/uvm-1.2
 	url = https://github.com/LitchiKnight/uvm-1.2.git
