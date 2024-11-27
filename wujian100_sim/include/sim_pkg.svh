@@ -24,13 +24,4 @@ package sim_pkg;
   `include "../src/seq/mem_seq/memory_read_sequence.svh"
   `include "../src/seq/int_seq/wdt_int_seq.svh"
   `include "../src/seq/int_seq/tim0_tim1_int_seq.svh"
-
-  `include "../test/base_test/wujian100_base_test.sv"
-  `include "../test/base_test/smoke_base_test.sv"
-
-  `include "../test/smoke_test/sram_smoke_test.sv"
-  `include "../test/smoke_test/dma_smoke_test.sv"
-  `include "../test/smoke_test/wdt_smoke_test.sv"
-  `include "../test/smoke_test/timer_smoke_test.sv"
-  `include "../test/smoke_test/pwm_smoke_test.sv"
 endpackage

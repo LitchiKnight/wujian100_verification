@@ -44,9 +44,15 @@ $TB_PATH/include/sim_pkg.svh
 //-------------------------------------
 // TB Filelist
 //-------------------------------------
-../tb/connect_ahb.sv
-../tb/connect_int.sv
-../tb/mcu_dummy.v
-../tb/top_hdl.sv
-../tb/top_hvl.sv
-../tb/tb_top.sv
+$TB_PATH/tb/connect_ahb.sv
+$TB_PATH/tb/connect_int.sv
+$TB_PATH/tb/mcu_dummy.v
+$TB_PATH/tb/top_hdl.sv
+$TB_PATH/tb/top_hvl.sv
+$TB_PATH/tb/tb_top.sv
+
+//-------------------------------------
+// Test Filelist
+//-------------------------------------
+-f $TB_PATH/flist/base_tests.f
+-f $TB_PATH/flist/smoke_tests.f

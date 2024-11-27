@@ -1,3 +1,11 @@
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
+import yuu_common_pkg::*;
+import yuu_ahb_pkg::*;
+import yuu_int_pkg::*;
+import sim_pkg::*;
+
 module tb_top;
   
   `define CORE_JTG_TCLK_DURATION 500
@@ -7,10 +15,10 @@ module tb_top;
   `define CLKMUX_ELS_CLK_DURATION 15258.789
 
 
-  reg             i_ext_pad_clkmux_ehs_clk ; 
-  reg             i_ext_pad_clkmux_els_clk ; 
-  reg             jtag_clk                 ;
-  reg             i_ext_pad_rstgen_i_mcurst;
+  reg                         i_ext_pad_clkmux_ehs_clk ; 
+  reg                         i_ext_pad_clkmux_els_clk ; 
+  reg                         jtag_clk                 ;
+  reg                         i_ext_pad_rstgen_i_mcurst;
 
   top_hdl                     u_top_hdl();
   top_hvl                     u_top_hvl();
