@@ -7,3 +7,9 @@
 [submodule "wujian100_sim/common/yuu_int"]
 	path = wujian100_sim/common/yuu_int
 	url = git@github.com:LitchiKnight/yuu_int.git
+[submodule "wujian100_sim/uvm_lib/uvm-1.2"]
+	path = wujian100_sim/uvm_lib/uvm-1.2
+	url = https://github.com/LitchiKnight/uvm-1.2.git
+[submodule "wujian100_sim/uvm_lib/uvm-1.1d"]
+	path = wujian100_sim/uvm_lib/uvm-1.1d
+	url = https://github.com/LitchiKnight/uvm-1.1d.git
