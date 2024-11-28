@@ -5,6 +5,7 @@ class top_reg_model extends uvm_reg_block;
   ral_block_wdt  wdt  ;
   ral_block_tim0 tim0 ;
   ral_block_pwm  pwm  ;
+  ral_block_rtc  rtc  ;
 
   function new(string name = "top_reg_model");
     super.new(name);
@@ -35,4 +36,9 @@ function void top_reg_model::build();
   pwm.configure(this, "");
   pwm.build();
   default_map.add_submap(pwm.default_map, `PWM_REG_BASE_ADDR);
+
+  rtc = ral_block_rtc::type_id::create("rtc");
+  rtc.configure(this, "");
+  rtc.build();
+  default_map.add_submap(rtc.default_map, `RTC_REG_BASE_ADDR);
 endfunction

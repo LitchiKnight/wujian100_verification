@@ -13,6 +13,7 @@ package sim_pkg;
   `include "../reg_model/ral_wdt.sv"
   `include "../reg_model/ral_tim0.sv"
   `include "../reg_model/ral_pwm.sv"
+  `include "../reg_model/ral_rtc.sv"
   `include "../reg_model/top_reg_model.sv"
 
   `include "../src/config/env_config.svh"
@@ -24,4 +25,5 @@ package sim_pkg;
   `include "../src/seq/mem_seq/memory_read_sequence.svh"
   `include "../src/seq/int_seq/wdt_int_seq.svh"
   `include "../src/seq/int_seq/tim0_tim1_int_seq.svh"
+  `include "../src/seq/int_seq/rtc_int_seq.svh"
 endpackage
