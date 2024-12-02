@@ -10,6 +10,7 @@
 `define WDT_REG_BASE_ADDR    32'h5000_8000
 `define PWM_REG_BASE_ADDR    32'h5001_C000
 `define RTC_REG_BASE_ADDR    32'h6000_4000
+`define USI0_REG_BASE_ADDR   32'h5002_8000
 
 // memory size
 `define INST_SRAM_SIZE       32'h8000

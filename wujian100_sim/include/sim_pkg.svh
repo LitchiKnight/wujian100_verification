@@ -14,6 +14,7 @@ package sim_pkg;
   `include "../reg_model/ral_tim0.sv"
   `include "../reg_model/ral_pwm.sv"
   `include "../reg_model/ral_rtc.sv"
+  `include "../reg_model/ral_usi0.sv"
   `include "../reg_model/top_reg_model.sv"
 
   `include "../src/config/env_config.svh"
