@@ -13,3 +13,6 @@
 [submodule "wujian100_sim/uvm_lib/uvm-1.1d"]
 	path = wujian100_sim/uvm_lib/uvm-1.1d
 	url = https://github.com/LitchiKnight/uvm-1.1d.git
+[submodule "wujian100_sim/common/i2c_vip"]
+	path = wujian100_sim/common/i2c_vip
+	url = https://github.com/LitchiKnight/i2c_vip.git
