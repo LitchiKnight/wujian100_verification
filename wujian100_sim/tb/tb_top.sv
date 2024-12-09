@@ -4,6 +4,7 @@ import uvm_pkg::*;
 import yuu_common_pkg::*;
 import yuu_ahb_pkg::*;
 import yuu_int_pkg::*;
+import i2c_master_pkg::*;
 import sim_pkg::*;
 
 module tb_top;
@@ -30,6 +31,9 @@ module tb_top;
 
   yuu_int_if                  int_if(i_ext_pad_clkmux_ehs_clk);
   connect_int                 con_int();
+
+  i2c_master_interface        i2c_mst_if(i_ext_pad_clkmux_ehs_clk);
+  connect_i2c                 con_i2c();
 
 ////////////////////////////////////clock define/////////////////////////////////
 ////////////////////////////////////ehs clock define////////////////////////////

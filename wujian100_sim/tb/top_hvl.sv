@@ -8,6 +8,7 @@ program top_hvl;
 	uvm_config_db #(virtual yuu_ahb_master_interface)::set(null, "uvm_test_top", "ahb_mst1_if", tb_top.ahb_mst1_if);
 	uvm_config_db #(virtual yuu_ahb_master_interface)::set(null, "uvm_test_top", "ahb_mst2_if", tb_top.ahb_mst2_if);
     uvm_config_db #(virtual yuu_int_if)::set(null, "uvm_test_top", "int_if", tb_top.int_if);
+    uvm_config_db #(virtual i2c_master_interface)::set(null, "uvm_test_top", "i2c_mst_if", tb_top.i2c_mst_if);
   end
 
   initial begin

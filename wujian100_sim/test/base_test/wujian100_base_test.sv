@@ -5,6 +5,7 @@ class wujian100_base_test extends uvm_test;
   virtual yuu_ahb_master_interface ahb_mst1_vif ;
   virtual yuu_ahb_master_interface ahb_mst2_vif ;
   virtual yuu_int_if               int_vif      ;
+  virtual i2c_master_interface     i2c_mst_vif  ;
 
           env_config               env_cfg      ;
 		  top_env                  env          ;
@@ -15,17 +16,20 @@ class wujian100_base_test extends uvm_test;
     super.new(name, parent);
   endfunction
 
-  extern virtual function void build_phase(uvm_phase phase)              ;
-  extern virtual function void connect_phase(uvm_phase phase)            ;
-  extern virtual function void end_of_elaboration_phase(uvm_phase phase) ;
-  extern virtual task          main_phase(uvm_phase phase)               ;
+  extern virtual function void build_phase(uvm_phase phase);
+  extern virtual function void connect_phase(uvm_phase phase);
+  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
+  extern virtual task          configure_phase(uvm_phase phase);
+  extern virtual task          main_phase(uvm_phase phase);
 
-  extern virtual function void create_config()                           ;
-  extern virtual function void retrieve_vifs()                           ;
-  extern virtual function void create_events()                           ;
-  extern virtual function void assign_config()                           ;
-  extern virtual function void install_isr()                             ;
-  extern virtual function void create_env()                              ;
+  extern virtual function void create_config();
+  extern virtual function void retrieve_vifs();
+  extern virtual function void create_events();
+  extern virtual function void assign_config();
+  extern virtual function void install_isr();
+  extern virtual function void create_env();
+
+  extern virtual function void initial_inst_sram();
 
   extern virtual task          read_memory(output bit[`DATA_BITS-1:0] data[],
                                            input  memory_t            mem_type,
@@ -35,6 +39,7 @@ class wujian100_base_test extends uvm_test;
                                             input  bit[`ADDR_BITS-1:0] offset,
                                             input  bit[`DATA_BITS-1:0] data[],
                                             input  int                 len);
+  
   extern virtual task          write_register(bit[31:0] data,
                                               string    reg_name,
                                               string    block_name);
@@ -76,6 +81,10 @@ function void wujian100_base_test::end_of_elaboration_phase(uvm_phase phase);
   uvm_top.print_topology();
 endfunction
 
+task wujian100_base_test::configure_phase(uvm_phase phase);
+  initial_inst_sram();
+endtask
+
 task wujian100_base_test::main_phase(uvm_phase phase);
   `uvm_info(get_type_name(), $sformatf("start run %s", get_name()), UVM_LOW)
 endtask
@@ -86,16 +95,19 @@ endfunction
 
 function void wujian100_base_test::retrieve_vifs();
   if (!uvm_config_db #(virtual yuu_ahb_master_interface)::get(this, "", "ahb_mst0_if", ahb_mst0_vif))
-	`uvm_fatal(get_type_name(), "can't get ahb master 0 interface, please check!")
+	`uvm_fatal(get_type_name(), "Cannot get ahb master 0 interface, please check!")
 
   if (!uvm_config_db #(virtual yuu_ahb_master_interface)::get(this, "", "ahb_mst1_if", ahb_mst1_vif))
-	`uvm_fatal(get_type_name(), "can't get ahb master 1 interface, please check!")
+	`uvm_fatal(get_type_name(), "Cannot get ahb master 1 interface, please check!")
 
   if (!uvm_config_db #(virtual yuu_ahb_master_interface)::get(this, "", "ahb_mst2_if", ahb_mst2_vif))
-	`uvm_fatal(get_type_name(), "can't get ahb master 2 interface, please check!")
+	`uvm_fatal(get_type_name(), "Cannot get ahb master 2 interface, please check!")
 
   if (!uvm_config_db #(virtual yuu_int_if)::get(this, "", "int_if", int_vif))
-    `uvm_fatal(get_type_name(), "can't get interrupt interface, please check!")
+    `uvm_fatal(get_type_name(), "Cannot get interrupt interface, please check!")
+
+  if (!uvm_config_db #(virtual i2c_master_interface)::get(this, "", "i2c_mst_if", i2c_mst_vif))
+    `uvm_fatal(get_type_name(), "Cannot get i2c master interface, please check!")
 endfunction
 
 function void wujian100_base_test::create_events();
@@ -103,6 +115,8 @@ function void wujian100_base_test::create_events();
 endfunction
 
 function void wujian100_base_test::assign_config();
+  env_cfg.events = this.events;
+
   env_cfg.ahb_mst0_cfg                 = yuu_ahb_master_config::type_id::create("ahb_mst0_cfg");
   env_cfg.ahb_mst0_cfg.index           = 0;
   env_cfg.ahb_mst0_cfg.coverage_enable = True;
@@ -129,7 +143,9 @@ function void wujian100_base_test::assign_config();
   env_cfg.int_cfg.vif    = int_vif;
   env_cfg.int_cfg.events = this.events;
   
-  env_cfg.events = this.events;
+  env_cfg.i2c_mst_cfg           = i2c_master_config::type_id::create("i2c_mst_cfg");
+  env_cfg.i2c_mst_cfg.vif       = i2c_mst_vif;
+  env_cfg.i2c_mst_cfg.is_active = UVM_ACTIVE;
 
   uvm_reg::include_coverage("*", UVM_CVR_ALL);
   env_cfg.regm = top_reg_model::type_id::create("regm");
@@ -160,6 +176,14 @@ endfunction
 
 function void wujian100_base_test::create_env();
   env = top_env::type_id::create("env", this);
+endfunction
+
+function void wujian100_base_test::initial_inst_sram();
+  for (int i = 0; i < `INST_SRAM_SIZE; i++)
+    env_cfg.direct_byte_write_memory(8'h0, INST_SRAM, i);
+
+  for (int j = 0; j < `DATA_SRAM_SIZE; j++)
+    env_cfg.direct_byte_write_memory(8'h0, DATA_SRAM, j);
 endfunction
 
 task wujian100_base_test::read_memory(output bit[`DATA_BITS-1:0] data[],

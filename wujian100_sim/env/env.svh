@@ -6,6 +6,7 @@ class top_env extends uvm_env;
   yuu_ahb_master_agent ahb_mst1_agt ;
   yuu_ahb_master_agent ahb_mst2_agt ;
   yuu_int_agent        int_agt      ;
+  i2c_master_agent     i2c_mst_agt  ; 
   virtual_sequencer    vseqr        ;
 
   function new(string name = "top_env", uvm_component parent);
@@ -28,12 +29,14 @@ function void top_env::build_phase(uvm_phase phase);
   ahb_mst1_agt = yuu_ahb_master_agent::type_id::create("ahb_mst1_agt", this);
   ahb_mst2_agt = yuu_ahb_master_agent::type_id::create("ahb_mst2_agt", this);
   int_agt      = yuu_int_agent::type_id::create("int_agt", this);
+  i2c_mst_agt  = i2c_master_agent::type_id::create("i2c_mst_agt", this);
   vseqr        = virtual_sequencer::type_id::create("vseqr", this);
 
   uvm_config_db#(yuu_ahb_master_config)::set(this, "ahb_mst0_agt", "cfg", env_cfg.ahb_mst0_cfg);
   uvm_config_db#(yuu_ahb_master_config)::set(this, "ahb_mst1_agt", "cfg", env_cfg.ahb_mst1_cfg);
   uvm_config_db#(yuu_ahb_master_config)::set(this, "ahb_mst2_agt", "cfg", env_cfg.ahb_mst2_cfg);
   uvm_config_db#(yuu_int_config)::set(this, "int_agt", "cfg", env_cfg.int_cfg);
+  uvm_config_db#(i2c_master_config)::set(this, "i2c_mst_agt", "cfg", env_cfg.i2c_mst_cfg);
 endfunction
 
 function void top_env::connect_phase(uvm_phase phase);
