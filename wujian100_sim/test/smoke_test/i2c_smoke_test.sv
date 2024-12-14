@@ -16,12 +16,16 @@ task i2c_smoke_test::run_smoke_test();
   write_field   (1'b0  , "MS_MODE"      , "I2C_MODE" , "usi0");
   write_field   (10'h3C, "I2C_ADDR"     , "I2C_ADDR" , "usi0");
   write_field   (1'b1  , "TH_MODE"      , "INTR_CTRL", "usi0");
-  write_field   (3'h1  , "RX_FIFO_TH"   , "INTR_CTRL", "usi0");
+  write_field   (3'h2  , "RX_FIFO_TH"   , "INTR_CTRL", "usi0");
   write_field   (1'b1  , "RX_THOLD_EN"  , "INTR_EN"  , "usi0");
   write_field   (1'b1  , "RX_THOLD_MASK", "INTR_MASK", "usi0");
-  write_register(4'hB  ,                   "USI_CTRL", "usi0");
+  write_register(4'hB  ,                  "USI_CTRL" , "usi0");
 
   i2c_mst_wr_seq = i2c_master_write_sequence::type_id::create("i2c_mst_wr_seq");
+  i2c_mst_wr_seq.randomize() with {
+    addr == 7'h3C;
+    addr_mode == ADDRESS_7BIT;
+  };
   i2c_mst_wr_seq.start(vseqr.i2c_mst_seqr);
 
   #10us;

@@ -6,6 +6,7 @@ interface i2c_master_interface(
   logic scl;
   wire  sda;
   logic sda_io;
+  logic sda_in;
 
   assign sda = sda_io ? 1'bz : 1'b0;
   assign (weak0, weak1) sda = 1'b1;
