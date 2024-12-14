@@ -13,7 +13,7 @@ task i2c_smoke_test::run_smoke_test();
   bit[31:0] rdata;
 
   write_field   (2'b1  , "MODE_SEL"     , "MODE_SEL" , "usi0");
-  write_field   (1'b0  , "MS_MDOE"      , "I2C_MODE" , "usi0");
+  write_field   (1'b0  , "MS_MODE"      , "I2C_MODE" , "usi0");
   write_field   (10'h3C, "I2C_ADDR"     , "I2C_ADDR" , "usi0");
   write_field   (1'b1  , "TH_MODE"      , "INTR_CTRL", "usi0");
   write_field   (3'h1  , "RX_FIFO_TH"   , "INTR_CTRL", "usi0");

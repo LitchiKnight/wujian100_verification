@@ -168,14 +168,14 @@ endclass : ral_reg_UART_STA
 
 
 class ral_reg_I2C_MODE extends uvm_reg;
-	rand uvm_reg_field MS_MDOE;
+	rand uvm_reg_field MS_MODE;
 
 	function new(string name = "I2C_MODE");
 		super.new(name, 32,build_coverage(UVM_NO_COVERAGE));
 	endfunction: new
    virtual function void build();
-      this.MS_MDOE = uvm_reg_field::type_id::create("MS_MDOE",,get_full_name());
-      this.MS_MDOE.configure(this, 1, 0, "RW", 0, 1'b1, 1, 0, 1);
+      this.MS_MODE = uvm_reg_field::type_id::create("MS_MODE",,get_full_name());
+      this.MS_MODE.configure(this, 1, 0, "RW", 0, 1'b1, 1, 0, 1);
    endfunction: build
 
 	`uvm_object_utils(ral_reg_I2C_MODE)
@@ -314,14 +314,14 @@ endclass : ral_reg_I2C_STA
 
 
 class ral_reg_SPI_MODE extends uvm_reg;
-	rand uvm_reg_field MS_MDOE;
+	rand uvm_reg_field MS_MODE;
 
 	function new(string name = "SPI_MODE");
 		super.new(name, 32,build_coverage(UVM_NO_COVERAGE));
 	endfunction: new
    virtual function void build();
-      this.MS_MDOE = uvm_reg_field::type_id::create("MS_MDOE",,get_full_name());
-      this.MS_MDOE.configure(this, 1, 0, "RW", 0, 1'b1, 1, 0, 1);
+      this.MS_MODE = uvm_reg_field::type_id::create("MS_MODE",,get_full_name());
+      this.MS_MODE.configure(this, 1, 0, "RW", 0, 1'b1, 1, 0, 1);
    endfunction: build
 
 	`uvm_object_utils(ral_reg_SPI_MODE)
@@ -864,7 +864,7 @@ class ral_block_usi0 extends uvm_reg_block;
 	uvm_reg_field TXD_WORK;
 	uvm_reg_field UART_STA_RXD_WORK;
 	uvm_reg_field RXD_WORK;
-	rand uvm_reg_field I2C_MODE_MS_MDOE;
+	rand uvm_reg_field I2C_MODE_MS_MODE;
 	rand uvm_reg_field I2C_ADDR_I2C_ADDR;
 	rand uvm_reg_field I2CM_CTRL_ADDR_MODE;
 	rand uvm_reg_field ADDR_MODE;
@@ -888,7 +888,7 @@ class ral_block_usi0 extends uvm_reg_block;
 	uvm_reg_field I2CM_DATA;
 	uvm_reg_field I2C_STA_I2CS_WORK;
 	uvm_reg_field I2CS_WORK;
-	rand uvm_reg_field SPI_MODE_MS_MDOE;
+	rand uvm_reg_field SPI_MODE_MS_MODE;
 	rand uvm_reg_field SPI_CTRL_DATA_SIZE;
 	rand uvm_reg_field DATA_SIZE;
 	rand uvm_reg_field SPI_CTRL_TMOD;
@@ -1217,7 +1217,7 @@ class ral_block_usi0 extends uvm_reg_block;
             '{"I2C_MODE", -1, -1}
          });
       this.default_map.add_reg(this.I2C_MODE, `UVM_REG_ADDR_WIDTH'h20, "RW", 0);
-		this.I2C_MODE_MS_MDOE = this.I2C_MODE.MS_MDOE;
+		this.I2C_MODE_MS_MODE = this.I2C_MODE.MS_MODE;
       this.I2C_ADDR = ral_reg_I2C_ADDR::type_id::create("I2C_ADDR",,get_full_name());
       this.I2C_ADDR.configure(this, null, "");
       this.I2C_ADDR.build();
@@ -1305,7 +1305,7 @@ class ral_block_usi0 extends uvm_reg_block;
             '{"SPI_MODE", -1, -1}
          });
       this.default_map.add_reg(this.SPI_MODE, `UVM_REG_ADDR_WIDTH'h40, "RW", 0);
-		this.SPI_MODE_MS_MDOE = this.SPI_MODE.MS_MDOE;
+		this.SPI_MODE_MS_MODE = this.SPI_MODE.MS_MODE;
       this.SPI_CTRL = ral_reg_SPI_CTRL::type_id::create("SPI_CTRL",,get_full_name());
       this.SPI_CTRL.configure(this, null, "");
       this.SPI_CTRL.build();
