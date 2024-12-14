@@ -160,6 +160,7 @@ function void wujian100_base_test::install_isr();
   wdt_int_seq       wdt_isr       ;
   tim0_tim1_int_seq tim0_tim1_isr ;
   rtc_int_seq       rtc_isr       ;
+  i2c_rx_int_seq    i2c_rx_isr    ;
 
   wdt_isr = wdt_int_seq::type_id::create("wdt_isr");
   wdt_isr.set_sequencer(vseqr);
@@ -172,6 +173,10 @@ function void wujian100_base_test::install_isr();
   rtc_isr = rtc_int_seq::type_id::create("rtc_isr");
   rtc_isr.set_sequencer(vseqr);
   env_cfg.int_cfg.install_isr(rtc_isr, 26, POSEDGE);
+
+  i2c_rx_isr = i2c_rx_int_seq::type_id::create("i2c_rx_isr");
+  i2c_rx_isr.set_sequencer(vseqr);
+  env_cfg.int_cfg.install_isr(i2c_rx_isr, 28, POSEDGE);
 endfunction
 
 function void wujian100_base_test::create_env();

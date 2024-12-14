@@ -46,6 +46,7 @@ function void top_env::connect_phase(uvm_phase phase);
   vseqr.ahb_mst0_seqr = ahb_mst0_agt.sequencer;
   vseqr.ahb_mst1_seqr = ahb_mst1_agt.sequencer;
   vseqr.ahb_mst2_seqr = ahb_mst2_agt.sequencer;
+  vseqr.i2c_mst_seqr  = i2c_mst_agt.sequencer ;
 
   env_cfg.regm.default_map.set_sequencer(ahb_mst0_agt.sequencer, ahb_mst0_agt.adapter);
   ahb_mst0_agt.predictor.map = env_cfg.regm.default_map;

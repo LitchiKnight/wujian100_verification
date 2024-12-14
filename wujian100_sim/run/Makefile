@@ -55,7 +55,7 @@ dir:
 	@mkdir -p $(LOG_PATH)/$(COMP_LOG_DIR)
 
 comp: dir
-	vcs $(COMP_OPTS) -debug_access+all+dmptf+pp+f+fn -debug_region+cell+encrypt
+	vcs $(COMP_OPTS) -debug_access+all+dmptf+pp+f+fn -debug_region+cell+encrypt +define+UVM_REG_NO_INDIVIDUAL_FIELD_ACCESS
 
 run:
 	@mkdir -p $(LOG_PATH)/$(SIM_LOG_DIR)/$(UVM_TEST)

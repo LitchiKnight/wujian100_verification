@@ -24,7 +24,11 @@ package sim_pkg;
 
   `include "memory_write_sequence.svh"
   `include "memory_read_sequence.svh"
+
   `include "wdt_int_seq.svh"
   `include "tim0_tim1_int_seq.svh"
   `include "rtc_int_seq.svh"
+  `include "i2c_rx_int_seq.svh"
+
+  `include "i2c_master_write_sequence.svh"
 endpackage
