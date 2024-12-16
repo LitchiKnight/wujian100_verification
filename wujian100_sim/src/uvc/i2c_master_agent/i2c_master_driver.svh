@@ -18,6 +18,8 @@ class i2c_master_driver extends uvm_driver #(i2c_master_item);
                                          output bit            nack);
   extern virtual task          send_data(input i2c_master_item item,
                                          output bit            nack);
+  extern virtual task          get_data(input  i2c_master_item item,
+                                        output bit[7:0]        data[]);
   extern virtual task          send_eof();
 endclass
 
@@ -44,13 +46,23 @@ task i2c_master_driver::run_phase(uvm_phase phase);
 
     seq_item_port.get_next_item(item);
     `uvm_info(get_type_name(), $sformatf("get a sequence item:\n%s", item.sprint()), UVM_LOW)
+    // send start of frame flag
     send_sof();
+    // send slave address
     send_addr(item, nack);
-    if (!nack)
-      send_data(item, nack);
+    if (!nack) begin
+      if (item.r_w) begin
+        bit[7:0] data[];
+        get_data(item, data); // read data
+        item.ret = data;
+      end
+      else begin
+        send_data(item, nack); // write data
+        item.nack = nack;
+      end
+    end
     if (!item.repeat_start)
-      send_eof();
-    item.nack = nack;
+      send_eof(); // send end of frame flag
     send_response(item);
     seq_item_port.item_done();
   end
@@ -92,8 +104,8 @@ task i2c_master_driver::send_addr(input i2c_master_item item,
   nack = (vif.sda_in == 1'b1);
 endtask
 
-task i2c_master_driver::send_data(input i2c_master_item item,
-                                  output bit            nack);
+task i2c_master_driver::send_data(input  i2c_master_item item,
+                                  output bit             nack);
   foreach(item.data[i]) begin
     // send data
     bit[7:0] tbc_byte = item.data[i];
@@ -111,6 +123,33 @@ task i2c_master_driver::send_data(input i2c_master_item item,
     // check nack
     if (nack)
       break;
+  end
+endtask
+
+task i2c_master_driver::get_data(input  i2c_master_item item,
+                                 output bit[7:0]        data[]);
+  data = new[item.len];
+  for (int i = 0; i < item.len; i++) begin
+    bit[7:0] rcv_byte;
+    // receive data
+    for (int n = 7; n >= 0; n--) begin
+      rcv_byte = rcv_byte << 1;
+      @ (negedge (vif.clk & vif.scl))
+      rcv_byte |= vif.sda_in;
+    end
+    data[i] = rcv_byte;
+    // send ack & nack
+    if (i < item.len-1) begin
+      @ (negedge (vif.clk & ~vif.scl))
+        vif.sda_io <= 1'b0;
+    end
+    else begin
+      @ (negedge (vif.clk & ~vif.scl))
+        vif.sda_io <= 1'b1;
+    end
+    // relase SDA
+    @ (negedge (vif.clk & ~vif.scl))
+      vif.sda_io <= 1'b1;
   end
 endtask
 

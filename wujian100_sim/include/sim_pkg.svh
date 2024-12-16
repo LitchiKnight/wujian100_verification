@@ -31,4 +31,5 @@ package sim_pkg;
   `include "i2c_rx_int_seq.svh"
 
   `include "i2c_master_write_sequence.svh"
+  `include "i2c_master_read_sequence.svh"
 endpackage
