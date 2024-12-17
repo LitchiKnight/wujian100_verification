@@ -82,26 +82,26 @@ task i2c_master_driver::send_response(i2c_master_item item);
 endtask
 
 task i2c_master_driver::send_sof();
-  @ (negedge (vif.clk & vif.scl));
-  vif.sda_io <= 1'b0;
+  @ (vif.m_drv_ctrl_cb);
+  vif.m_drv_ctrl_cb.sda_io <= 1'b0;
 endtask
 
 task i2c_master_driver::send_addr(input i2c_master_item item,
                                   output bit            nack);
   // send slave addr
   for (int i = item.slave_addr_mode-1; i >= 0; i--) begin
-    @ (negedge (vif.clk & ~vif.scl))
-      vif.sda_io <= item.slave_addr[i];
+    @ (vif.m_drv_data_cb);
+    vif.m_drv_data_cb.sda_io <= item.slave_addr[i];
   end
   // send r/w flag
-  @ (negedge (vif.clk & ~vif.scl))
-    vif.sda_io <= item.r_w;
+  @ (vif.m_drv_data_cb);
+  vif.m_drv_data_cb.sda_io <= item.r_w;
   // relase SDA
-  @ (negedge (vif.clk & ~vif.scl))
-    vif.sda_io <= 1'b1;
+  @ (vif.m_drv_data_cb);
+  vif.m_drv_data_cb.sda_io <= 1'b1;
   // wait nack
-  @ (negedge (vif.clk & vif.scl));
-  nack = (vif.sda_in == 1'b1);
+  @ (vif.s_drv_data_cb);
+  nack = vif.s_drv_data_cb.sda_in;
 endtask
 
 task i2c_master_driver::send_data(input  i2c_master_item item,
@@ -111,15 +111,15 @@ task i2c_master_driver::send_data(input  i2c_master_item item,
     bit[7:0] tbc_byte = item.data[i];
     `uvm_info(get_type_name(), $sformatf("send 0x%0h to 0x%0h i2c slave device", tbc_byte, item.slave_addr), UVM_LOW)
     for (int n = 7; n >= 0; n--) begin
-      @ (negedge (vif.clk & ~vif.scl))
-        vif.sda_io <= tbc_byte[n];
+      @ (vif.m_drv_data_cb);
+      vif.m_drv_data_cb.sda_io <= tbc_byte[n];
     end
     // relase SDA
-    @ (negedge (vif.clk & ~vif.scl))
-      vif.sda_io <= 1'b1;
+    @ (vif.m_drv_data_cb);
+    vif.m_drv_data_cb.sda_io <= 1'b1;
     // wait nack
-    @ (negedge (vif.clk & vif.scl))
-      nack = (vif.sda_in == 1'b1);
+    @ (vif.s_drv_data_cb);
+    nack = (vif.s_drv_data_cb.sda_in == 1'b1);
     // check nack
     if (nack)
       break;
@@ -134,28 +134,28 @@ task i2c_master_driver::get_data(input  i2c_master_item item,
     // receive data
     for (int n = 7; n >= 0; n--) begin
       rcv_byte = rcv_byte << 1;
-      @ (negedge (vif.clk & vif.scl))
-      rcv_byte |= vif.sda_in;
+      @ (vif.s_drv_data_cb);
+      rcv_byte |= vif.s_drv_data_cb.sda_in;
     end
     data[i] = rcv_byte;
     // send ack & nack
     if (i < item.len-1) begin
-      @ (negedge (vif.clk & ~vif.scl))
-        vif.sda_io <= 1'b0;
+      @ (vif.m_drv_data_cb);
+      vif.m_drv_data_cb.sda_io <= 1'b0;
     end
     else begin
-      @ (negedge (vif.clk & ~vif.scl))
-        vif.sda_io <= 1'b1;
+      @ (vif.m_drv_data_cb);
+      vif.m_drv_data_cb.sda_io <= 1'b1;
     end
     // relase SDA
-    @ (negedge (vif.clk & ~vif.scl))
-      vif.sda_io <= 1'b1;
+    @ (vif.m_drv_data_cb);
+    vif.m_drv_data_cb.sda_io <= 1'b1;
   end
 endtask
 
 task i2c_master_driver::send_eof();
-  @ (negedge (vif.clk & ~vif.scl));
-  vif.sda_io <= 1'b0;
-  @ (negedge (vif.clk & vif.scl));
-  vif.sda_io <= 1'b1;
+  @ (vif.m_drv_data_cb);
+  vif.m_drv_data_cb.sda_io <= 1'b0;
+  @ (vif.m_drv_ctrl_cb);
+  vif.m_drv_ctrl_cb.sda_io <= 1'b1;
 endtask

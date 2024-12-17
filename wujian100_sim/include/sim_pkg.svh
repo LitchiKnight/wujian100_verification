@@ -6,6 +6,7 @@ package sim_pkg;
   import yuu_ahb_pkg::*;
   import yuu_int_pkg::*;
   import i2c_master_pkg::*;
+  import i2c_slave_pkg::*;
 
   `include "sim_macro.svh"
   `include "sim_define.svh"

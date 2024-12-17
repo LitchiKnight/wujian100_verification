@@ -34,11 +34,13 @@ $VIP_PATH/yuu_int/include/yuu_int_pkg.sv
 // I2C UVC Directories
 //-------------------------------------
 +incdir+$TB_PATH/src/uvc/i2c_master_agent
++incdir+$TB_PATH/src/uvc/i2c_slave_agent
 
 //-------------------------------------
 // I2C UVC Files
 //-------------------------------------
 $TB_PATH/src/uvc/i2c_master_agent/i2c_master_package.sv
+$TB_PATH/src/uvc/i2c_slave_agent/i2c_slave_package.sv
 
 //-------------------------------------
 // TB Define 

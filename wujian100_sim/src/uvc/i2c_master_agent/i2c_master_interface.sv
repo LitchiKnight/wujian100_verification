@@ -11,14 +11,18 @@ interface i2c_master_interface(
   assign sda = sda_io ? 1'bz : 1'b0;
   assign (weak0, weak1) sda = 1'b1;
 
-  clocking drv_cb @ (posedge clk);
+  clocking m_drv_ctrl_cb @ (negedge (clk & scl));
     default input #1step output #1step;
     output sda_io;
   endclocking
 
-  clocking mon_cb @ (posedge clk);
+  clocking m_drv_data_cb @ (negedge (clk & ~scl));
     default input #1step output #1step;
-    input sda_io;
+    output sda_io;
   endclocking
 
+  clocking s_drv_data_cb @ (negedge (clk & scl));
+    default input #1step output #1step;
+    input sda_in;
+  endclocking
 endinterface
