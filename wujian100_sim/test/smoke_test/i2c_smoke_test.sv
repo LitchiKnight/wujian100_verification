@@ -5,8 +5,13 @@ class i2c_smoke_test extends smoke_base_test;
     super.new(name, parent);
   endfunction
 
-  extern task run_smoke_test();
+  extern function void modify_config();
+  extern task          run_smoke_test();
 endclass
+
+function void i2c_smoke_test::modify_config();
+  env_cfg.i2c_mst_cfg.speed_mode = HIGH_SPEED_MODE;
+endfunction
 
 task i2c_smoke_test::run_smoke_test();
   i2c_master_write_sequence i2c_mst_wr_seq;

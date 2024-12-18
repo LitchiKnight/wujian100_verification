@@ -3,6 +3,7 @@ class i2c_master_driver extends uvm_driver #(i2c_master_item);
 
   virtual i2c_master_interface vif    ;
           i2c_master_config    cfg    ;
+          real                 period ;
 
   function new(string name = "i2c_master_driver", uvm_component parent);
     super.new(name, parent);
@@ -12,6 +13,7 @@ class i2c_master_driver extends uvm_driver #(i2c_master_item);
   extern virtual task          run_phase(uvm_phase phase);
 
   extern virtual task          init_signal();
+  extern virtual task          clk_gen();
   extern virtual task          send_response(i2c_master_item item);
   extern virtual task          send_sof();
   extern virtual task          send_addr(input i2c_master_item item,
@@ -26,19 +28,12 @@ endclass
 function void i2c_master_driver::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
 
-  this.vif = cfg.vif;
+  this.vif    = cfg.vif;
+  this.period = (1000000/cfg.speed_mode); // ns
 endfunction
 
 task i2c_master_driver::run_phase(uvm_phase phase);
-  fork
-    forever begin
-      # (cfg.clk_period/4) vif.clk = ~vif.clk;
-    end
-    forever begin
-      # (cfg.clk_period/2) vif.scl = ~vif.scl;
-    end
-  join_none
-
+  clk_gen();
   init_signal();
   forever begin
     i2c_master_item item ;
@@ -72,6 +67,17 @@ task i2c_master_driver::init_signal();
   vif.clk    <= 1'b1;
   vif.scl    <= 1'b1;
   vif.sda_io <= 1'b1;
+endtask
+
+task i2c_master_driver::clk_gen();
+  fork
+    forever begin
+      # (period/4) vif.clk = ~vif.clk;
+    end
+    forever begin
+      # (period/2) vif.scl = ~vif.scl;
+    end
+  join_none
 endtask
 
 task i2c_master_driver::send_response(i2c_master_item item);

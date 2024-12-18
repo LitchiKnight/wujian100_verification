@@ -30,6 +30,7 @@ class wujian100_base_test extends uvm_test;
   extern virtual function void create_env();
 
   extern virtual function void initial_inst_sram();
+  extern virtual function void modify_config();
 
   extern virtual task          read_memory(output bit[`DATA_BITS-1:0] data[],
                                            input  memory_t            mem_type,
@@ -64,6 +65,7 @@ function void wujian100_base_test::build_phase(uvm_phase phase);
   create_events() ;
   assign_config() ;
   create_env()    ;
+  modify_config() ;
 
   uvm_config_db #(env_config)::set(this, "env", "env_cfg", env_cfg);
 endfunction
@@ -189,6 +191,10 @@ function void wujian100_base_test::initial_inst_sram();
 
   for (int j = 0; j < `DATA_SRAM_SIZE; j++)
     env_cfg.direct_byte_write_memory(8'h0, DATA_SRAM, j);
+endfunction
+
+function void wujian100_base_test::modify_config();
+  // TODO use uvm_callback
 endfunction
 
 task wujian100_base_test::read_memory(output bit[`DATA_BITS-1:0] data[],
