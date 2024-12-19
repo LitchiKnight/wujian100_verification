@@ -14,15 +14,14 @@ class i2c_master_driver extends uvm_driver #(i2c_master_item);
 
   extern virtual task          init_signal();
   extern virtual task          clk_gen();
-  extern virtual task          send_response(i2c_master_item item);
   extern virtual task          send_sof();
-  extern virtual task          send_addr(input i2c_master_item item,
-                                         output bit            nack);
-  extern virtual task          send_data(input i2c_master_item item,
-                                         output bit            nack);
-  extern virtual task          get_data(input  i2c_master_item item,
-                                        output bit[7:0]        data[]);
   extern virtual task          send_eof();
+  extern virtual task          wait_ack_bit(output bit ack);
+  extern virtual task          send_ack_bit(input bit ack);
+  extern virtual task          send_slave_address(input i2c_master_item item);
+  extern virtual task          transmit_data(input i2c_master_item item);
+  extern virtual task          receive_data(input i2c_master_item item, output bit[7:0] data[]);
+  extern virtual task          send_response(input i2c_master_item item);
 endclass
 
 function void i2c_master_driver::connect_phase(uvm_phase phase);
@@ -37,23 +36,21 @@ task i2c_master_driver::run_phase(uvm_phase phase);
   init_signal();
   forever begin
     i2c_master_item item ;
-    bit             nack ;
+    bit             ack  ;
 
     seq_item_port.get_next_item(item);
     `uvm_info(get_type_name(), $sformatf("get a sequence item:\n%s", item.sprint()), UVM_LOW)
-    // send start of frame flag
-    send_sof();
-    // send slave address
-    send_addr(item, nack);
-    if (!nack) begin
-      if (item.r_w) begin
+    send_sof(); // send start of frame flag
+    send_slave_address(item); // send slave address
+    wait_ack_bit(ack); // wait slave ack
+    if (ack) begin
+      if (item.r_w) begin // read data
         bit[7:0] data[];
-        get_data(item, data); // read data
+        receive_data(item, data);
         item.ret = data;
       end
-      else begin
-        send_data(item, nack); // write data
-        item.nack = nack;
+      else begin // write data
+        transmit_data(item);
       end
     end
     if (!item.repeat_start)
@@ -80,20 +77,29 @@ task i2c_master_driver::clk_gen();
   join_none
 endtask
 
-task i2c_master_driver::send_response(i2c_master_item item);
-  rsp = i2c_master_item::type_id::create("rsp");
-  rsp.set_id_info(item);
-  rsp.copy(item);
-  seq_item_port.put_response(rsp);
-endtask
-
 task i2c_master_driver::send_sof();
   @ (vif.m_drv_ctrl_cb);
   vif.m_drv_ctrl_cb.sda_io <= 1'b0;
 endtask
 
-task i2c_master_driver::send_addr(input i2c_master_item item,
-                                  output bit            nack);
+task i2c_master_driver::send_eof();
+  @ (vif.m_drv_data_cb);
+  vif.m_drv_data_cb.sda_io <= 1'b0;
+  @ (vif.m_drv_ctrl_cb);
+  vif.m_drv_ctrl_cb.sda_io <= 1'b1;
+endtask
+
+task i2c_master_driver::wait_ack_bit(output bit ack);
+  @ (vif.s_drv_data_cb);
+  ack = vif.s_drv_data_cb.sda_in;
+endtask
+
+task i2c_master_driver::send_ack_bit(input bit ack);
+  @ (vif.m_drv_data_cb);
+  vif.m_drv_data_cb.sda_io <= ack;
+endtask
+
+task i2c_master_driver::send_slave_address(i2c_master_item item);
   // send slave addr
   for (int i = item.slave_addr_mode-1; i >= 0; i--) begin
     @ (vif.m_drv_data_cb);
@@ -105,63 +111,56 @@ task i2c_master_driver::send_addr(input i2c_master_item item,
   // relase SDA
   @ (vif.m_drv_data_cb);
   vif.m_drv_data_cb.sda_io <= 1'b1;
-  // wait nack
-  @ (vif.s_drv_data_cb);
-  nack = vif.s_drv_data_cb.sda_in;
 endtask
 
-task i2c_master_driver::send_data(input  i2c_master_item item,
-                                  output bit             nack);
+task i2c_master_driver::transmit_data(i2c_master_item item);
   foreach(item.data[i]) begin
+    bit      ack     ;
+    bit[7:0] tx_byte ;
+
+    tx_byte = item.data[i];
+    `uvm_info(get_type_name(), $sformatf("send 0x%0h to 0x%0h i2c slave device", tx_byte, item.slave_addr), UVM_LOW)
     // send data
-    bit[7:0] tbc_byte = item.data[i];
-    `uvm_info(get_type_name(), $sformatf("send 0x%0h to 0x%0h i2c slave device", tbc_byte, item.slave_addr), UVM_LOW)
     for (int n = 7; n >= 0; n--) begin
       @ (vif.m_drv_data_cb);
-      vif.m_drv_data_cb.sda_io <= tbc_byte[n];
+      vif.m_drv_data_cb.sda_io <= tx_byte[n];
     end
     // relase SDA
     @ (vif.m_drv_data_cb);
     vif.m_drv_data_cb.sda_io <= 1'b1;
-    // wait nack
-    @ (vif.s_drv_data_cb);
-    nack = (vif.s_drv_data_cb.sda_in == 1'b1);
-    // check nack
-    if (nack)
+    // wait & check nack
+    wait_ack_bit(ack);
+    if (!ack)
       break;
   end
 endtask
 
-task i2c_master_driver::get_data(input  i2c_master_item item,
-                                 output bit[7:0]        data[]);
+task i2c_master_driver::receive_data(input  i2c_master_item item,
+                                     output bit[7:0]        data[]);
   data = new[item.len];
   for (int i = 0; i < item.len; i++) begin
-    bit[7:0] rcv_byte;
+    bit[7:0] rx_byte;
     // receive data
     for (int n = 7; n >= 0; n--) begin
-      rcv_byte = rcv_byte << 1;
+      rx_byte = rx_byte << 1;
       @ (vif.s_drv_data_cb);
-      rcv_byte |= vif.s_drv_data_cb.sda_in;
+      rx_byte |= vif.s_drv_data_cb.sda_in;
     end
-    data[i] = rcv_byte;
+    data[i] = rx_byte;
     // send ack & nack
-    if (i < item.len-1) begin
-      @ (vif.m_drv_data_cb);
-      vif.m_drv_data_cb.sda_io <= 1'b0;
-    end
-    else begin
-      @ (vif.m_drv_data_cb);
-      vif.m_drv_data_cb.sda_io <= 1'b1;
-    end
+    if (i < item.len-1)
+      send_ack_bit(1'b0);
+    else
+      send_ack_bit(1'b1);
     // relase SDA
     @ (vif.m_drv_data_cb);
     vif.m_drv_data_cb.sda_io <= 1'b1;
   end
 endtask
 
-task i2c_master_driver::send_eof();
-  @ (vif.m_drv_data_cb);
-  vif.m_drv_data_cb.sda_io <= 1'b0;
-  @ (vif.m_drv_ctrl_cb);
-  vif.m_drv_ctrl_cb.sda_io <= 1'b1;
+task i2c_master_driver::send_response(i2c_master_item item);
+  rsp = i2c_master_item::type_id::create("rsp");
+  rsp.set_id_info(item);
+  rsp.copy(item);
+  seq_item_port.put_response(rsp);
 endtask

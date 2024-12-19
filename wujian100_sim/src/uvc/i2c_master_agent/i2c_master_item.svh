@@ -5,7 +5,6 @@ class i2c_master_item extends uvm_sequence_item;
   rand int unsigned      len             ;
   rand bit[7:0]          data[]          ;
   rand bit               repeat_start    ;
-       bit               nack            ;
        bit[7:0]          ret[]           ;
 
   `uvm_object_utils_begin(i2c_master_item)
@@ -16,7 +15,6 @@ class i2c_master_item extends uvm_sequence_item;
     if (r_w == 1'b0)
       `uvm_field_array_int (                   data           , UVM_ALL_ON)
     `uvm_field_int       (                   repeat_start   , UVM_ALL_ON)
-    `uvm_field_int       (                   nack           , UVM_ALL_ON)
     `uvm_field_array_int (                   ret            , UVM_ALL_ON)
   `uvm_object_utils_end
 

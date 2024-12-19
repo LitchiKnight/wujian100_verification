@@ -186,11 +186,7 @@ function void wujian100_base_test::create_env();
 endfunction
 
 function void wujian100_base_test::initial_inst_sram();
-  for (int i = 0; i < `INST_SRAM_SIZE; i++)
-    env_cfg.direct_byte_write_memory(8'h0, INST_SRAM, i);
-
-  for (int j = 0; j < `DATA_SRAM_SIZE; j++)
-    env_cfg.direct_byte_write_memory(8'h0, DATA_SRAM, j);
+  // TODO
 endfunction
 
 function void wujian100_base_test::modify_config();
