@@ -91,7 +91,7 @@ endtask
 
 task i2c_master_driver::wait_ack_bit(output bit ack);
   @ (vif.s_drv_data_cb);
-  ack = vif.s_drv_data_cb.sda_in;
+  ack = !vif.s_drv_data_cb.sda_in;
 endtask
 
 task i2c_master_driver::send_ack_bit(input bit ack);

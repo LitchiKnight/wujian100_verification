@@ -10,7 +10,7 @@ class i2c_smoke_test extends smoke_base_test;
 endclass
 
 function void i2c_smoke_test::modify_config();
-  env_cfg.i2c_mst_cfg.speed_mode = HIGH_SPEED_MODE;
+  env_cfg.i2c_mst_cfg.speed_mode = FAST_MODE;
 endfunction
 
 task i2c_smoke_test::run_smoke_test();
