@@ -1,8 +1,8 @@
 class i2c_master_write_sequence extends uvm_sequence #(i2c_master_item);
   `uvm_object_utils(i2c_master_write_sequence)
 
-  rand slave_addr_mode_e addr_mode ;
-  rand bit[9:0]          addr      ;
+  rand i2c_addr_mode_e   addr_mode ;
+  rand bit[7:0]          addr      ;
   rand int unsigned      len       ;
 
   function new(string name = "i2c_master_write_sequence");
@@ -13,14 +13,19 @@ class i2c_master_write_sequence extends uvm_sequence #(i2c_master_item);
 endclass
 
 task i2c_master_write_sequence::body();
-  `uvm_create(req)
-  req.randomize() with {
-    slave_addr_mode == addr_mode ;
-    slave_addr      == addr      ;
-    len             == local::len;
-    r_w             == 1'b0      ;
-    repeat_start    == 1'b0      ;
-  };
-  `uvm_send(req)
+  `uvm_do_with(req, {cmd == SEND_SOF;})
+  `uvm_do_with(req, {cmd == SEND_DATA; data == {addr, 1'b0};})
+  `uvm_do_with(req, {cmd == RCV_ACK;})
+  get_response(rsp);
+  if (rsp.ret) begin
+    for (int i = 0; i < len; i++) begin
+      `uvm_do_with(req, {cmd == SEND_DATA;})
+      `uvm_do_with(req, {cmd == RCV_ACK;})
+      get_response(rsp);
+      if (!rsp.ret)
+        break;
+    end
+  end
+  `uvm_do_with(req, {cmd == SEND_EOF;})
 endtask
 
