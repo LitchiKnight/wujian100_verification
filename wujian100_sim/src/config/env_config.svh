@@ -5,7 +5,8 @@ class env_config extends uvm_object;
   yuu_ahb_master_config ahb_mst1_cfg ;
   yuu_ahb_master_config ahb_mst2_cfg ;
   yuu_int_config        int_cfg      ;
-  i2c_master_config     i2c_mst_cfg  ;
+  i2c_config            i2c_mst_cfg  ;
+  i2c_config            i2c_slv_cfg  ;
   uvm_event_pool        events       ;
   top_reg_model         regm         ;
 

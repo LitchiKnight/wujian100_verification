@@ -5,8 +5,7 @@ package sim_pkg;
   import yuu_common_pkg::*;
   import yuu_ahb_pkg::*;
   import yuu_int_pkg::*;
-  import i2c_master_pkg::*;
-  import i2c_slave_pkg::*;
+  import i2c_pkg::*;
 
   `include "sim_macro.svh"
   `include "sim_define.svh"
@@ -30,7 +29,4 @@ package sim_pkg;
   `include "tim0_tim1_int_seq.svh"
   `include "rtc_int_seq.svh"
   `include "i2c_rx_int_seq.svh"
-
-  `include "i2c_master_write_sequence.svh"
-  `include "i2c_master_read_sequence.svh"
 endpackage

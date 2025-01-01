@@ -6,7 +6,7 @@ import uvm_pkg::*;
 import yuu_common_pkg::*;
 import yuu_ahb_pkg::*;
 import yuu_int_pkg::*;
-import i2c_master_pkg::*;
+import i2c_pkg::*;
 import sim_pkg::*;
 
 module tb_top;
@@ -21,7 +21,6 @@ module tb_top;
   reg                         i_ext_pad_clkmux_els_clk ; 
   reg                         jtag_clk                 ;
   reg                         i_ext_pad_rstgen_i_mcurst;
-  reg                         i2c_clk                  ;
 
   top_hdl                     u_top_hdl();
   top_hvl                     u_top_hvl();
@@ -34,8 +33,16 @@ module tb_top;
   yuu_int_if                  int_if(i_ext_pad_clkmux_ehs_clk);
   connect_int                 con_int();
 
-  i2c_master_interface        i2c_mst_if();
-  connect_i2c                 con_i2c();
+  i2c_interface i2c_mst_if(
+    .clk(i_ext_pad_clkmux_ehs_clk),
+    .scl(u_top_hdl.PAD_USI0_SCLK),
+    .sda(u_top_hdl.PAD_USI0_SD0)
+  );
+  i2c_interface i2c_slv_if(
+    .clk(i_ext_pad_clkmux_ehs_clk),
+    .scl(u_top_hdl.PAD_USI0_SCLK),
+    .sda(u_top_hdl.PAD_USI0_SD0)
+  );
 
 ////////////////////////////////////clock define/////////////////////////////////
 ////////////////////////////////////ehs clock define////////////////////////////

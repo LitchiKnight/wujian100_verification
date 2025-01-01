@@ -5,7 +5,8 @@ class wujian100_base_test extends uvm_test;
   virtual yuu_ahb_master_interface ahb_mst1_vif ;
   virtual yuu_ahb_master_interface ahb_mst2_vif ;
   virtual yuu_int_if               int_vif      ;
-  virtual i2c_master_interface     i2c_mst_vif  ;
+  virtual i2c_interface            i2c_mst_vif  ;
+  virtual i2c_interface            i2c_slv_vif  ;
 
           env_config               env_cfg      ;
 		  top_env                  env          ;
@@ -108,8 +109,11 @@ function void wujian100_base_test::retrieve_vifs();
   if (!uvm_config_db #(virtual yuu_int_if)::get(this, "", "int_if", int_vif))
     `uvm_fatal(get_type_name(), "Cannot get interrupt interface, please check!")
 
-  if (!uvm_config_db #(virtual i2c_master_interface)::get(this, "", "i2c_mst_if", i2c_mst_vif))
+  if (!uvm_config_db #(virtual i2c_interface)::get(this, "", "i2c_mst_if", i2c_mst_vif))
     `uvm_fatal(get_type_name(), "Cannot get i2c master interface, please check!")
+
+  if (!uvm_config_db #(virtual i2c_interface)::get(this, "", "i2c_slv_if", i2c_slv_vif))
+    `uvm_fatal(get_type_name(), "Cannot get i2c slave interface, please check!")
 endfunction
 
 function void wujian100_base_test::create_events();
@@ -145,9 +149,20 @@ function void wujian100_base_test::assign_config();
   env_cfg.int_cfg.vif    = int_vif;
   env_cfg.int_cfg.events = this.events;
   
-  env_cfg.i2c_mst_cfg           = i2c_master_config::type_id::create("i2c_mst_cfg");
-  env_cfg.i2c_mst_cfg.vif       = i2c_mst_vif;
-  env_cfg.i2c_mst_cfg.is_active = UVM_ACTIVE;
+  env_cfg.i2c_mst_cfg            = i2c_config::type_id::create("i2c_mst_cfg");
+  env_cfg.i2c_mst_cfg.vif        = i2c_mst_vif;
+  env_cfg.i2c_mst_cfg.work_mode  = I2C_MASTER;
+  env_cfg.i2c_mst_cfg.speed_mode = I2C_STANDARD_MODE;
+  env_cfg.i2c_mst_cfg.is_active  = UVM_ACTIVE;
+  env_cfg.i2c_mst_cfg.events     = this.events;
+
+  env_cfg.i2c_slv_cfg            = i2c_config::type_id::create("i2c_slv_cfg");
+  env_cfg.i2c_slv_cfg.vif        = i2c_slv_vif;
+  env_cfg.i2c_slv_cfg.work_mode  = I2C_SLAVE;
+  env_cfg.i2c_slv_cfg.addr_mode  = I2C_ADDR_7BIT;
+  env_cfg.i2c_slv_cfg.slave_addr = 7'h2A;
+  env_cfg.i2c_slv_cfg.is_active  = UVM_ACTIVE;
+  env_cfg.i2c_slv_cfg.events     = this.events;
 
   uvm_reg::include_coverage("*", UVM_CVR_ALL);
   env_cfg.regm = top_reg_model::type_id::create("regm");
