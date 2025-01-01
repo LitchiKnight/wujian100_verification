@@ -1,10 +1,11 @@
 class i2c_driver extends uvm_driver #(i2c_sequence_item);
   `uvm_component_utils(i2c_driver)
 
-  virtual i2c_interface vif      ;
-          i2c_config    cfg      ;
-          real          period   ;
-          bit           scl_gate ;
+  virtual i2c_interface  vif      ;
+          i2c_config     cfg      ;
+          real           period   ;
+          // bit            scl_gate ;
+		  uvm_event_pool events   ;
 
   function new(string name = "i2c_driver", uvm_component parent);
     super.new(name, parent);
@@ -21,6 +22,7 @@ function void i2c_driver::connect_phase(uvm_phase phase);
 
   this.vif    = cfg.vif;
   this.period = (1000000/cfg.speed_mode); // ns
+  this.events = cfg.events;
 endfunction
 
 task i2c_driver::run_phase(uvm_phase phase);
@@ -32,7 +34,9 @@ task i2c_driver::run_phase(uvm_phase phase);
     `uvm_info(get_type_name(), $sformatf("get a sequence item:\n%s", req.sprint()), UVM_HIGH)
     case (req.cmd)
       I2C_SEND_SOF: begin
-        scl_gate = 1'b1;
+	    uvm_event i2c_drive_sof = events.get("i2c_drive_sof");
+        // scl_gate = 1'b1;
+		i2c_drive_sof.trigger();
         @ (posedge vif.scl_in);
         @ (vif.drv_cb);
         vif.drv_cb.sda_oe <= 1'b0;
@@ -77,13 +81,16 @@ task i2c_driver::run_phase(uvm_phase phase);
         vif.drv_cb.sda_oe <= 1'b1;
       end
       I2C_SEND_EOF: begin
+	    uvm_event i2c_drive_eof = events.get("i2c_drive_eof");
+
         @ (negedge vif.scl_in);
         @ (vif.drv_cb);
         vif.drv_cb.sda_oe <= 1'b0;
         @ (posedge vif.scl_in);
         @ (vif.drv_cb);
         vif.drv_cb.sda_oe <= 1'b1;
-        scl_gate = 1'b0;
+        // scl_gate = 1'b0;
+		i2c_drive_eof.trigger();
       end
     endcase
     seq_item_port.item_done();
@@ -97,11 +104,30 @@ endtask
 
 task i2c_driver::scl_gen();
   if (cfg.work_mode == I2C_MASTER) begin
+	uvm_event i2c_drive_sof = events.get("i2c_drive_sof");
+	uvm_event i2c_drive_eof = events.get("i2c_drive_eof");
     fork
-      @ (negedge vif.clk);
-      forever begin
-        # (period/2) vif.scl_oe = ~vif.scl_oe & scl_gate;
-      end
+      // @ (negedge vif.clk);
+      // forever begin
+      //   # (period/2) vif.scl_oe = ~vif.scl_oe & scl_gate;
+      // end
+	  begin
+	    forever begin
+		  i2c_drive_sof.wait_trigger();
+	      fork
+		    fork
+		      forever begin
+                # (period/2) vif.scl_oe = ~vif.scl_oe;
+		  	  end
+			  begin
+		  	    i2c_drive_eof.wait_trigger();
+			    vif.scl_oe <= 1'b1;
+			  end
+		    join_any
+		    disable fork;
+		  join
+	    end
+	  end
     join_none
   end
 endtask

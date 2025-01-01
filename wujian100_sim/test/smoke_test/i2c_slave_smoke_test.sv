@@ -1,7 +1,7 @@
-class i2c_smoke_test extends smoke_base_test;
-   `uvm_component_utils(i2c_smoke_test)
+class i2c_slave_smoke_test extends smoke_base_test;
+   `uvm_component_utils(i2c_slave_smoke_test)
 
-  function new(string name = "i2c_smoke_test", uvm_component parent);
+  function new(string name = "i2c_slave_smoke_test", uvm_component parent);
     super.new(name, parent);
   endfunction
 
@@ -11,17 +11,17 @@ class i2c_smoke_test extends smoke_base_test;
   extern task          run_smoke_test();
 endclass
 
-function void i2c_smoke_test::build_phase(uvm_phase phase);
+function void i2c_slave_smoke_test::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
   uvm_config_db #(uvm_object_wrapper)::set(this, "env.i2c_slv_agt.sequencer.run_phase", "default_sequence", i2c_slave_sequence_base::type_id::get());
 endfunction
 
-function void i2c_smoke_test::modify_config();
+function void i2c_slave_smoke_test::modify_config();
   env_cfg.i2c_mst_cfg.speed_mode = I2C_FAST_MODE;
 endfunction
 
-task i2c_smoke_test::run_smoke_test();
+task i2c_slave_smoke_test::run_smoke_test();
   i2c_master_sequence_base i2c_mst_wr_seq;
   i2c_master_sequence_base i2c_mst_rd_seq;
   bit[31:0] rdata;

@@ -1,9 +1,9 @@
 class i2c_monitor extends uvm_monitor;
   `uvm_component_utils(i2c_monitor)
 
-  virtual i2c_interface     vif       ;
-          i2c_config        cfg       ;
-          uvm_event_pool    events    ;
+  virtual i2c_interface     vif      ;
+          i2c_config        cfg      ;
+          uvm_event_pool    events   ;
           i2c_sequence_item mon_item ;
 
   uvm_analysis_port #(i2c_sequence_item) mon_out_port;
