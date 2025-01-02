@@ -28,7 +28,7 @@ task i2c_slave_smoke_test::run_smoke_test();
 
   write_field   (2'b1  , "MODE_SEL"     , "MODE_SEL" , "usi0");
   write_field   (1'b0  , "MS_MODE"      , "I2C_MODE" , "usi0");
-  write_field   (10'h3C, "I2C_ADDR"     , "I2C_ADDR" , "usi0");
+  write_field   (10'h13C, "I2C_ADDR"     , "I2C_ADDR" , "usi0");
   write_field   (1'b1  , "TH_MODE"      , "INTR_CTRL", "usi0");
   write_field   (3'h2  , "RX_FIFO_TH"   , "INTR_CTRL", "usi0");
   write_field   (1'b1  , "RX_THOLD_EN"  , "INTR_EN"  , "usi0");
@@ -37,7 +37,8 @@ task i2c_slave_smoke_test::run_smoke_test();
 
   i2c_mst_wr_seq = i2c_master_sequence_base::type_id::create("i2c_mst_wr_seq");
   i2c_mst_wr_seq.randomize() with {
-    addr      == 7'h3C     ;
+    addr_mode == I2C_ADDR_10BIT ;
+    addr      == 10'h13C   ;
     len       == 20        ;
     direction == I2C_WRITE ;
   };
@@ -56,7 +57,8 @@ task i2c_slave_smoke_test::run_smoke_test();
 
   i2c_mst_rd_seq = i2c_master_sequence_base::type_id::create("i2c_mst_rd_seq");
   i2c_mst_rd_seq.randomize() with {
-    addr      == 7'h3C    ;
+    addr_mode == I2C_ADDR_10BIT ;
+    addr      == 10'h13C  ;
     len       == 8        ;
     direction == I2C_READ ;
   };
