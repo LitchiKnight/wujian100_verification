@@ -7,6 +7,7 @@ class wujian100_base_test extends uvm_test;
   virtual yuu_int_if               int_vif      ;
   virtual i2c_interface            i2c_mst_vif  ;
   virtual i2c_interface            i2c_slv_vif  ;
+  virtual uart_interface           uart_vif     ;
 
           env_config               env_cfg      ;
 		  top_env                  env          ;
@@ -114,6 +115,9 @@ function void wujian100_base_test::retrieve_vifs();
 
   if (!uvm_config_db #(virtual i2c_interface)::get(this, "", "i2c_slv_if", i2c_slv_vif))
     `uvm_fatal(get_type_name(), "Cannot get i2c slave interface, please check!")
+
+  if (!uvm_config_db #(virtual uart_interface)::get(this, "", "uart_if", uart_vif))
+    `uvm_fatal(get_type_name(), "Cannot get uart interface, please check!")
 endfunction
 
 function void wujian100_base_test::create_events();
@@ -164,6 +168,10 @@ function void wujian100_base_test::assign_config();
   env_cfg.i2c_slv_cfg.is_active  = UVM_ACTIVE;
   env_cfg.i2c_slv_cfg.events     = this.events;
 
+  env_cfg.uart_cfg        = uart_config::type_id::create("uart_cfg");
+  env_cfg.uart_cfg.vif    = uart_vif;
+  env_cfg.uart_cfg.events = this.events;
+
   uvm_reg::include_coverage("*", UVM_CVR_ALL);
   env_cfg.regm = top_reg_model::type_id::create("regm");
   env_cfg.regm.configure(null, "");
@@ -178,6 +186,7 @@ function void wujian100_base_test::install_isr();
   tim0_tim1_int_seq tim0_tim1_isr ;
   rtc_int_seq       rtc_isr       ;
   i2c_rx_int_seq    i2c_rx_isr    ;
+  uart_rx_int_seq   uart_rx_isr   ;
 
   wdt_isr = wdt_int_seq::type_id::create("wdt_isr");
   wdt_isr.set_sequencer(vseqr);
@@ -194,6 +203,10 @@ function void wujian100_base_test::install_isr();
   i2c_rx_isr = i2c_rx_int_seq::type_id::create("i2c_rx_isr");
   i2c_rx_isr.set_sequencer(vseqr);
   env_cfg.int_cfg.install_isr(i2c_rx_isr, 28, POSEDGE);
+
+  uart_rx_isr = uart_rx_int_seq::type_id::create("uart_rx_isr");
+  uart_rx_isr.set_sequencer(vseqr);
+  env_cfg.int_cfg.install_isr(uart_rx_isr, 29, POSEDGE);
 endfunction
 
 function void wujian100_base_test::create_env();

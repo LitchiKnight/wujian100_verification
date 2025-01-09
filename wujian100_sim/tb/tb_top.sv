@@ -7,6 +7,7 @@ import yuu_common_pkg::*;
 import yuu_ahb_pkg::*;
 import yuu_int_pkg::*;
 import i2c_pkg::*;
+import uart_pkg::*;
 import sim_pkg::*;
 
 module tb_top;
@@ -42,6 +43,11 @@ module tb_top;
     .clk(i_ext_pad_clkmux_ehs_clk),
     .scl(u_top_hdl.PAD_USI0_SCLK),
     .sda(u_top_hdl.PAD_USI0_SD0)
+  );
+
+  uart_interface uart_if(
+    .tx(u_top_hdl.PAD_USI1_SCLK),
+    .rx(u_top_hdl.PAD_USI1_SD0)
   );
 
 ////////////////////////////////////clock define/////////////////////////////////

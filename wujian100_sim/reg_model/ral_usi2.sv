@@ -1,9 +1,9 @@
-`ifndef RAL_USI0
-`define RAL_USI0
+`ifndef RAL_USI2
+`define RAL_USI2
 
 import uvm_pkg::*;
 
-class usi0_USI_CTRL extends uvm_reg;
+class usi2_USI_CTRL extends uvm_reg;
 	rand uvm_reg_field USI_EN;
 	rand uvm_reg_field FM_EN;
 	rand uvm_reg_field TX_FIFO_EN;
@@ -23,12 +23,12 @@ class usi0_USI_CTRL extends uvm_reg;
       this.RX_FIFO_EN.configure(this, 1, 3, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_USI_CTRL)
+	`uvm_object_utils(usi2_USI_CTRL)
 
-endclass : usi0_USI_CTRL
+endclass : usi2_USI_CTRL
 
 
-class usi0_MODE_SEL extends uvm_reg;
+class usi2_MODE_SEL extends uvm_reg;
 	rand uvm_reg_field MODE_SEL;
 
 	function new(string name = "MODE_SEL");
@@ -39,12 +39,12 @@ class usi0_MODE_SEL extends uvm_reg;
       this.MODE_SEL.configure(this, 2, 0, "RW", 0, 2'h0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_MODE_SEL)
+	`uvm_object_utils(usi2_MODE_SEL)
 
-endclass : usi0_MODE_SEL
+endclass : usi2_MODE_SEL
 
 
-class usi0_DATA_FIFO extends uvm_reg;
+class usi2_DATA_FIFO extends uvm_reg;
 	rand uvm_reg_field DATA;
 
 	function new(string name = "DATA_FIFO");
@@ -55,12 +55,12 @@ class usi0_DATA_FIFO extends uvm_reg;
       this.DATA.configure(this, 16, 0, "RW", 0, 16'h0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_DATA_FIFO)
+	`uvm_object_utils(usi2_DATA_FIFO)
 
-endclass : usi0_DATA_FIFO
+endclass : usi2_DATA_FIFO
 
 
-class usi0_FIFO_STA extends uvm_reg;
+class usi2_FIFO_STA extends uvm_reg;
 	uvm_reg_field TX_EMPTY;
 	uvm_reg_field TX_FULL;
 	uvm_reg_field RX_EMPTY;
@@ -86,12 +86,12 @@ class usi0_FIFO_STA extends uvm_reg;
       this.RX_NUM.configure(this, 4, 16, "RO", 0, 4'h0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_FIFO_STA)
+	`uvm_object_utils(usi2_FIFO_STA)
 
-endclass : usi0_FIFO_STA
+endclass : usi2_FIFO_STA
 
 
-class usi0_CLK_DIV0 extends uvm_reg;
+class usi2_CLK_DIV0 extends uvm_reg;
 	rand uvm_reg_field CLK_DIV0;
 
 	function new(string name = "CLK_DIV0");
@@ -102,12 +102,12 @@ class usi0_CLK_DIV0 extends uvm_reg;
       this.CLK_DIV0.configure(this, 24, 0, "RW", 0, 24'h20, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_CLK_DIV0)
+	`uvm_object_utils(usi2_CLK_DIV0)
 
-endclass : usi0_CLK_DIV0
+endclass : usi2_CLK_DIV0
 
 
-class usi0_CLK_DIV1 extends uvm_reg;
+class usi2_CLK_DIV1 extends uvm_reg;
 	rand uvm_reg_field CLK_DIV1;
 
 	function new(string name = "CLK_DIV1");
@@ -118,12 +118,12 @@ class usi0_CLK_DIV1 extends uvm_reg;
       this.CLK_DIV1.configure(this, 24, 0, "RW", 0, 24'h20, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_CLK_DIV1)
+	`uvm_object_utils(usi2_CLK_DIV1)
 
-endclass : usi0_CLK_DIV1
+endclass : usi2_CLK_DIV1
 
 
-class usi0_UART_CTRL extends uvm_reg;
+class usi2_UART_CTRL extends uvm_reg;
 	rand uvm_reg_field DBIT;
 	rand uvm_reg_field PBIT;
 	rand uvm_reg_field PEN;
@@ -143,12 +143,12 @@ class usi0_UART_CTRL extends uvm_reg;
       this.EPS.configure(this, 1, 5, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_UART_CTRL)
+	`uvm_object_utils(usi2_UART_CTRL)
 
-endclass : usi0_UART_CTRL
+endclass : usi2_UART_CTRL
 
 
-class usi0_UART_STA extends uvm_reg;
+class usi2_UART_STA extends uvm_reg;
 	uvm_reg_field TXD_WORK;
 	uvm_reg_field RXD_WORK;
 
@@ -162,12 +162,12 @@ class usi0_UART_STA extends uvm_reg;
       this.RXD_WORK.configure(this, 1, 1, "RO", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_UART_STA)
+	`uvm_object_utils(usi2_UART_STA)
 
-endclass : usi0_UART_STA
+endclass : usi2_UART_STA
 
 
-class usi0_I2C_MODE extends uvm_reg;
+class usi2_I2C_MODE extends uvm_reg;
 	rand uvm_reg_field MS_MODE;
 
 	function new(string name = "I2C_MODE");
@@ -178,12 +178,12 @@ class usi0_I2C_MODE extends uvm_reg;
       this.MS_MODE.configure(this, 1, 0, "RW", 0, 1'b1, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2C_MODE)
+	`uvm_object_utils(usi2_I2C_MODE)
 
-endclass : usi0_I2C_MODE
+endclass : usi2_I2C_MODE
 
 
-class usi0_I2C_ADDR extends uvm_reg;
+class usi2_I2C_ADDR extends uvm_reg;
 	rand uvm_reg_field I2C_ADDR;
 
 	function new(string name = "I2C_ADDR");
@@ -194,12 +194,12 @@ class usi0_I2C_ADDR extends uvm_reg;
       this.I2C_ADDR.configure(this, 10, 0, "RW", 0, 10'h133, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2C_ADDR)
+	`uvm_object_utils(usi2_I2C_ADDR)
 
-endclass : usi0_I2C_ADDR
+endclass : usi2_I2C_ADDR
 
 
-class usi0_I2CM_CTRL extends uvm_reg;
+class usi2_I2CM_CTRL extends uvm_reg;
 	rand uvm_reg_field ADDR_MODE;
 	rand uvm_reg_field STOP;
 	rand uvm_reg_field HS_MODE;
@@ -222,12 +222,12 @@ class usi0_I2CM_CTRL extends uvm_reg;
       this.GCALL.configure(this, 1, 4, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2CM_CTRL)
+	`uvm_object_utils(usi2_I2CM_CTRL)
 
-endclass : usi0_I2CM_CTRL
+endclass : usi2_I2CM_CTRL
 
 
-class usi0_I2CM_CODE extends uvm_reg;
+class usi2_I2CM_CODE extends uvm_reg;
 	rand uvm_reg_field MCODE;
 
 	function new(string name = "I2CM_CODE");
@@ -238,12 +238,12 @@ class usi0_I2CM_CODE extends uvm_reg;
       this.MCODE.configure(this, 3, 0, "RW", 0, 3'h1, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2CM_CODE)
+	`uvm_object_utils(usi2_I2CM_CODE)
 
-endclass : usi0_I2CM_CODE
+endclass : usi2_I2CM_CODE
 
 
-class usi0_I2CS_CTRL extends uvm_reg;
+class usi2_I2CS_CTRL extends uvm_reg;
 	rand uvm_reg_field GCALL_MODE;
 
 	function new(string name = "I2CS_CTRL");
@@ -254,12 +254,12 @@ class usi0_I2CS_CTRL extends uvm_reg;
       this.GCALL_MODE.configure(this, 1, 0, "RW", 0, 1'b0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2CS_CTRL)
+	`uvm_object_utils(usi2_I2CS_CTRL)
 
-endclass : usi0_I2CS_CTRL
+endclass : usi2_I2CS_CTRL
 
 
-class usi0_I2C_FM_DIV extends uvm_reg;
+class usi2_I2C_FM_DIV extends uvm_reg;
 	rand uvm_reg_field I2C_FM_DIV;
 
 	function new(string name = "I2C_FM_DIV");
@@ -270,12 +270,12 @@ class usi0_I2C_FM_DIV extends uvm_reg;
       this.I2C_FM_DIV.configure(this, 8, 0, "RW", 0, 8'h5, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2C_FM_DIV)
+	`uvm_object_utils(usi2_I2C_FM_DIV)
 
-endclass : usi0_I2C_FM_DIV
+endclass : usi2_I2C_FM_DIV
 
 
-class usi0_I2C_HOLD extends uvm_reg;
+class usi2_I2C_HOLD extends uvm_reg;
 	rand uvm_reg_field I2C_HOLD;
 
 	function new(string name = "I2C_HOLD");
@@ -286,12 +286,12 @@ class usi0_I2C_HOLD extends uvm_reg;
       this.I2C_HOLD.configure(this, 8, 0, "RW", 0, 8'h5, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2C_HOLD)
+	`uvm_object_utils(usi2_I2C_HOLD)
 
-endclass : usi0_I2C_HOLD
+endclass : usi2_I2C_HOLD
 
 
-class usi0_I2C_STA extends uvm_reg;
+class usi2_I2C_STA extends uvm_reg;
 	uvm_reg_field I2CM_WORK;
 	uvm_reg_field I2CM_DATA;
 	uvm_reg_field I2CS_WORK;
@@ -308,12 +308,12 @@ class usi0_I2C_STA extends uvm_reg;
       this.I2CS_WORK.configure(this, 1, 8, "RO", 0, 1'b0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_I2C_STA)
+	`uvm_object_utils(usi2_I2C_STA)
 
-endclass : usi0_I2C_STA
+endclass : usi2_I2C_STA
 
 
-class usi0_SPI_MODE extends uvm_reg;
+class usi2_SPI_MODE extends uvm_reg;
 	rand uvm_reg_field MS_MODE;
 
 	function new(string name = "SPI_MODE");
@@ -324,12 +324,12 @@ class usi0_SPI_MODE extends uvm_reg;
       this.MS_MODE.configure(this, 1, 0, "RW", 0, 1'b1, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_SPI_MODE)
+	`uvm_object_utils(usi2_SPI_MODE)
 
-endclass : usi0_SPI_MODE
+endclass : usi2_SPI_MODE
 
 
-class usi0_SPI_CTRL extends uvm_reg;
+class usi2_SPI_CTRL extends uvm_reg;
 	rand uvm_reg_field DATA_SIZE;
 	rand uvm_reg_field TMOD;
 	rand uvm_reg_field CPHA;
@@ -355,12 +355,12 @@ class usi0_SPI_CTRL extends uvm_reg;
       this.NSS_CTRL.configure(this, 1, 9, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_SPI_CTRL)
+	`uvm_object_utils(usi2_SPI_CTRL)
 
-endclass : usi0_SPI_CTRL
+endclass : usi2_SPI_CTRL
 
 
-class usi0_SPI_STA extends uvm_reg;
+class usi2_SPI_STA extends uvm_reg;
 	uvm_reg_field SPI_WORKING;
 
 	function new(string name = "SPI_STA");
@@ -371,12 +371,12 @@ class usi0_SPI_STA extends uvm_reg;
       this.SPI_WORKING.configure(this, 1, 0, "RO", 0, 1'b0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_SPI_STA)
+	`uvm_object_utils(usi2_SPI_STA)
 
-endclass : usi0_SPI_STA
+endclass : usi2_SPI_STA
 
 
-class usi0_INTR_CTRL extends uvm_reg;
+class usi2_INTR_CTRL extends uvm_reg;
 	rand uvm_reg_field TX_FIFO_TH;
 	rand uvm_reg_field RX_FIFO_TH;
 	rand uvm_reg_field TH_MODE;
@@ -393,12 +393,12 @@ class usi0_INTR_CTRL extends uvm_reg;
       this.TH_MODE.configure(this, 1, 16, "RW", 0, 1'b0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_INTR_CTRL)
+	`uvm_object_utils(usi2_INTR_CTRL)
 
-endclass : usi0_INTR_CTRL
+endclass : usi2_INTR_CTRL
 
 
-class usi0_INTR_EN extends uvm_reg;
+class usi2_INTR_EN extends uvm_reg;
 	rand uvm_reg_field TX_THOLD_EN;
 	rand uvm_reg_field TX_EMPTY_EN;
 	rand uvm_reg_field TX_FULL_EN;
@@ -463,12 +463,12 @@ class usi0_INTR_EN extends uvm_reg;
       this.SPI_STOP_EN.configure(this, 1, 18, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_INTR_EN)
+	`uvm_object_utils(usi2_INTR_EN)
 
-endclass : usi0_INTR_EN
+endclass : usi2_INTR_EN
 
 
-class usi0_INTR_STA extends uvm_reg;
+class usi2_INTR_STA extends uvm_reg;
 	uvm_reg_field TX_THOLD;
 	uvm_reg_field TX_EMPTY;
 	uvm_reg_field TX_FULL;
@@ -533,12 +533,12 @@ class usi0_INTR_STA extends uvm_reg;
       this.SPI_STOP.configure(this, 1, 18, "RO", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_INTR_STA)
+	`uvm_object_utils(usi2_INTR_STA)
 
-endclass : usi0_INTR_STA
+endclass : usi2_INTR_STA
 
 
-class usi0_RAW_INTR_STA extends uvm_reg;
+class usi2_RAW_INTR_STA extends uvm_reg;
 	uvm_reg_field RAW_TX_THOLD;
 	uvm_reg_field RAW_TX_EMPTY;
 	uvm_reg_field RAW_TX_FULL;
@@ -603,12 +603,12 @@ class usi0_RAW_INTR_STA extends uvm_reg;
       this.RAW_SPI_STOP.configure(this, 1, 18, "RO", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_RAW_INTR_STA)
+	`uvm_object_utils(usi2_RAW_INTR_STA)
 
-endclass : usi0_RAW_INTR_STA
+endclass : usi2_RAW_INTR_STA
 
 
-class usi0_INTR_MASK extends uvm_reg;
+class usi2_INTR_MASK extends uvm_reg;
 	rand uvm_reg_field TX_THOLD_MASK;
 	rand uvm_reg_field TX_EMPTY_MASK;
 	rand uvm_reg_field TX_FULL_MASK;
@@ -673,12 +673,12 @@ class usi0_INTR_MASK extends uvm_reg;
       this.SPI_STOP_MASK.configure(this, 1, 18, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_INTR_MASK)
+	`uvm_object_utils(usi2_INTR_MASK)
 
-endclass : usi0_INTR_MASK
+endclass : usi2_INTR_MASK
 
 
-class usi0_INTR_CLR extends uvm_reg;
+class usi2_INTR_CLR extends uvm_reg;
 	rand uvm_reg_field TX_THOLD_CLR;
 	rand uvm_reg_field TX_EMPTY_CLR;
 	rand uvm_reg_field TX_FULL_CLR;
@@ -743,12 +743,12 @@ class usi0_INTR_CLR extends uvm_reg;
       this.SPI_STOP_CLR.configure(this, 1, 18, "WO", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_INTR_CLR)
+	`uvm_object_utils(usi2_INTR_CLR)
 
-endclass : usi0_INTR_CLR
+endclass : usi2_INTR_CLR
 
 
-class usi0_DMA_CTRL extends uvm_reg;
+class usi2_DMA_CTRL extends uvm_reg;
 	rand uvm_reg_field TX_DMA_EN;
 	rand uvm_reg_field RX_DMA_EN;
 
@@ -762,12 +762,12 @@ class usi0_DMA_CTRL extends uvm_reg;
       this.RX_DMA_EN.configure(this, 1, 1, "RW", 0, 1'b0, 1, 0, 0);
    endfunction: build
 
-	`uvm_object_utils(usi0_DMA_CTRL)
+	`uvm_object_utils(usi2_DMA_CTRL)
 
-endclass : usi0_DMA_CTRL
+endclass : usi2_DMA_CTRL
 
 
-class usi0_DMA_THRESHOLD extends uvm_reg;
+class usi2_DMA_THRESHOLD extends uvm_reg;
 	rand uvm_reg_field TX_DMA_TH;
 	rand uvm_reg_field RX_DMA_TH;
 
@@ -781,12 +781,12 @@ class usi0_DMA_THRESHOLD extends uvm_reg;
       this.RX_DMA_TH.configure(this, 4, 8, "RW", 0, 4'h4, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_DMA_THRESHOLD)
+	`uvm_object_utils(usi2_DMA_THRESHOLD)
 
-endclass : usi0_DMA_THRESHOLD
+endclass : usi2_DMA_THRESHOLD
 
 
-class usi0_SPI_NSS_DATA extends uvm_reg;
+class usi2_SPI_NSS_DATA extends uvm_reg;
 	rand uvm_reg_field NSS_DATA;
 
 	function new(string name = "SPI_NSS_DATA");
@@ -797,40 +797,40 @@ class usi0_SPI_NSS_DATA extends uvm_reg;
       this.NSS_DATA.configure(this, 1, 0, "RW", 0, 1'b0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(usi0_SPI_NSS_DATA)
+	`uvm_object_utils(usi2_SPI_NSS_DATA)
 
-endclass : usi0_SPI_NSS_DATA
+endclass : usi2_SPI_NSS_DATA
 
 
-class ral_block_usi0 extends uvm_reg_block;
-	rand usi0_USI_CTRL USI_CTRL;
-	rand usi0_MODE_SEL MODE_SEL;
-	rand usi0_DATA_FIFO DATA_FIFO;
-	rand usi0_FIFO_STA FIFO_STA;
-	rand usi0_CLK_DIV0 CLK_DIV0;
-	rand usi0_CLK_DIV1 CLK_DIV1;
-	rand usi0_UART_CTRL UART_CTRL;
-	rand usi0_UART_STA UART_STA;
-	rand usi0_I2C_MODE I2C_MODE;
-	rand usi0_I2C_ADDR I2C_ADDR;
-	rand usi0_I2CM_CTRL I2CM_CTRL;
-	rand usi0_I2CM_CODE I2CM_CODE;
-	rand usi0_I2CS_CTRL I2CS_CTRL;
-	rand usi0_I2C_FM_DIV I2C_FM_DIV;
-	rand usi0_I2C_HOLD I2C_HOLD;
-	rand usi0_I2C_STA I2C_STA;
-	rand usi0_SPI_MODE SPI_MODE;
-	rand usi0_SPI_CTRL SPI_CTRL;
-	rand usi0_SPI_STA SPI_STA;
-	rand usi0_INTR_CTRL INTR_CTRL;
-	rand usi0_INTR_EN INTR_EN;
-	rand usi0_INTR_STA INTR_STA;
-	rand usi0_RAW_INTR_STA RAW_INTR_STA;
-	rand usi0_INTR_MASK INTR_MASK;
-	rand usi0_INTR_CLR INTR_CLR;
-	rand usi0_DMA_CTRL DMA_CTRL;
-	rand usi0_DMA_THRESHOLD DMA_THRESHOLD;
-	rand usi0_SPI_NSS_DATA SPI_NSS_DATA;
+class ral_block_usi2 extends uvm_reg_block;
+	rand usi2_USI_CTRL USI_CTRL;
+	rand usi2_MODE_SEL MODE_SEL;
+	rand usi2_DATA_FIFO DATA_FIFO;
+	rand usi2_FIFO_STA FIFO_STA;
+	rand usi2_CLK_DIV0 CLK_DIV0;
+	rand usi2_CLK_DIV1 CLK_DIV1;
+	rand usi2_UART_CTRL UART_CTRL;
+	rand usi2_UART_STA UART_STA;
+	rand usi2_I2C_MODE I2C_MODE;
+	rand usi2_I2C_ADDR I2C_ADDR;
+	rand usi2_I2CM_CTRL I2CM_CTRL;
+	rand usi2_I2CM_CODE I2CM_CODE;
+	rand usi2_I2CS_CTRL I2CS_CTRL;
+	rand usi2_I2C_FM_DIV I2C_FM_DIV;
+	rand usi2_I2C_HOLD I2C_HOLD;
+	rand usi2_I2C_STA I2C_STA;
+	rand usi2_SPI_MODE SPI_MODE;
+	rand usi2_SPI_CTRL SPI_CTRL;
+	rand usi2_SPI_STA SPI_STA;
+	rand usi2_INTR_CTRL INTR_CTRL;
+	rand usi2_INTR_EN INTR_EN;
+	rand usi2_INTR_STA INTR_STA;
+	rand usi2_RAW_INTR_STA RAW_INTR_STA;
+	rand usi2_INTR_MASK INTR_MASK;
+	rand usi2_INTR_CLR INTR_CLR;
+	rand usi2_DMA_CTRL DMA_CTRL;
+	rand usi2_DMA_THRESHOLD DMA_THRESHOLD;
+	rand usi2_SPI_NSS_DATA SPI_NSS_DATA;
 	rand uvm_reg_field USI_CTRL_USI_EN;
 	rand uvm_reg_field USI_EN;
 	rand uvm_reg_field USI_CTRL_FM_EN;
@@ -1106,13 +1106,13 @@ class ral_block_usi0 extends uvm_reg_block;
 	rand uvm_reg_field SPI_NSS_DATA_NSS_DATA;
 	rand uvm_reg_field NSS_DATA;
 
-	function new(string name = "usi0");
+	function new(string name = "usi2");
 		super.new(name, build_coverage(UVM_NO_COVERAGE));
 	endfunction: new
 
    virtual function void build();
       this.default_map = create_map("", 0, 4, UVM_LITTLE_ENDIAN, 0);
-      this.USI_CTRL = usi0_USI_CTRL::type_id::create("USI_CTRL",,get_full_name());
+      this.USI_CTRL = usi2_USI_CTRL::type_id::create("USI_CTRL",,get_full_name());
       this.USI_CTRL.configure(this, null, "");
       this.USI_CTRL.build();
          this.USI_CTRL.add_hdl_path('{
@@ -1128,7 +1128,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.TX_FIFO_EN = this.USI_CTRL.TX_FIFO_EN;
 		this.USI_CTRL_RX_FIFO_EN = this.USI_CTRL.RX_FIFO_EN;
 		this.RX_FIFO_EN = this.USI_CTRL.RX_FIFO_EN;
-      this.MODE_SEL = usi0_MODE_SEL::type_id::create("MODE_SEL",,get_full_name());
+      this.MODE_SEL = usi2_MODE_SEL::type_id::create("MODE_SEL",,get_full_name());
       this.MODE_SEL.configure(this, null, "");
       this.MODE_SEL.build();
          this.MODE_SEL.add_hdl_path('{
@@ -1137,7 +1137,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.MODE_SEL, `UVM_REG_ADDR_WIDTH'h4, "RW", 0);
 		this.MODE_SEL_MODE_SEL = this.MODE_SEL.MODE_SEL;
-      this.DATA_FIFO = usi0_DATA_FIFO::type_id::create("DATA_FIFO",,get_full_name());
+      this.DATA_FIFO = usi2_DATA_FIFO::type_id::create("DATA_FIFO",,get_full_name());
       this.DATA_FIFO.configure(this, null, "");
       this.DATA_FIFO.build();
          this.DATA_FIFO.add_hdl_path('{
@@ -1147,7 +1147,7 @@ class ral_block_usi0 extends uvm_reg_block;
       this.default_map.add_reg(this.DATA_FIFO, `UVM_REG_ADDR_WIDTH'h8, "RW", 0);
 		this.DATA_FIFO_DATA = this.DATA_FIFO.DATA;
 		this.DATA = this.DATA_FIFO.DATA;
-      this.FIFO_STA = usi0_FIFO_STA::type_id::create("FIFO_STA",,get_full_name());
+      this.FIFO_STA = usi2_FIFO_STA::type_id::create("FIFO_STA",,get_full_name());
       this.FIFO_STA.configure(this, null, "");
       this.FIFO_STA.build();
          this.FIFO_STA.add_hdl_path('{
@@ -1163,7 +1163,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.TX_NUM = this.FIFO_STA.TX_NUM;
 		this.FIFO_STA_RX_NUM = this.FIFO_STA.RX_NUM;
 		this.RX_NUM = this.FIFO_STA.RX_NUM;
-      this.CLK_DIV0 = usi0_CLK_DIV0::type_id::create("CLK_DIV0",,get_full_name());
+      this.CLK_DIV0 = usi2_CLK_DIV0::type_id::create("CLK_DIV0",,get_full_name());
       this.CLK_DIV0.configure(this, null, "");
       this.CLK_DIV0.build();
          this.CLK_DIV0.add_hdl_path('{
@@ -1172,7 +1172,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.CLK_DIV0, `UVM_REG_ADDR_WIDTH'h10, "RW", 0);
 		this.CLK_DIV0_CLK_DIV0 = this.CLK_DIV0.CLK_DIV0;
-      this.CLK_DIV1 = usi0_CLK_DIV1::type_id::create("CLK_DIV1",,get_full_name());
+      this.CLK_DIV1 = usi2_CLK_DIV1::type_id::create("CLK_DIV1",,get_full_name());
       this.CLK_DIV1.configure(this, null, "");
       this.CLK_DIV1.build();
          this.CLK_DIV1.add_hdl_path('{
@@ -1181,7 +1181,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.CLK_DIV1, `UVM_REG_ADDR_WIDTH'h14, "RW", 0);
 		this.CLK_DIV1_CLK_DIV1 = this.CLK_DIV1.CLK_DIV1;
-      this.UART_CTRL = usi0_UART_CTRL::type_id::create("UART_CTRL",,get_full_name());
+      this.UART_CTRL = usi2_UART_CTRL::type_id::create("UART_CTRL",,get_full_name());
       this.UART_CTRL.configure(this, null, "");
       this.UART_CTRL.build();
          this.UART_CTRL.add_hdl_path('{
@@ -1197,7 +1197,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.PEN = this.UART_CTRL.PEN;
 		this.UART_CTRL_EPS = this.UART_CTRL.EPS;
 		this.EPS = this.UART_CTRL.EPS;
-      this.UART_STA = usi0_UART_STA::type_id::create("UART_STA",,get_full_name());
+      this.UART_STA = usi2_UART_STA::type_id::create("UART_STA",,get_full_name());
       this.UART_STA.configure(this, null, "");
       this.UART_STA.build();
          this.UART_STA.add_hdl_path('{
@@ -1209,7 +1209,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.TXD_WORK = this.UART_STA.TXD_WORK;
 		this.UART_STA_RXD_WORK = this.UART_STA.RXD_WORK;
 		this.RXD_WORK = this.UART_STA.RXD_WORK;
-      this.I2C_MODE = usi0_I2C_MODE::type_id::create("I2C_MODE",,get_full_name());
+      this.I2C_MODE = usi2_I2C_MODE::type_id::create("I2C_MODE",,get_full_name());
       this.I2C_MODE.configure(this, null, "");
       this.I2C_MODE.build();
          this.I2C_MODE.add_hdl_path('{
@@ -1218,7 +1218,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.I2C_MODE, `UVM_REG_ADDR_WIDTH'h20, "RW", 0);
 		this.I2C_MODE_MS_MODE = this.I2C_MODE.MS_MODE;
-      this.I2C_ADDR = usi0_I2C_ADDR::type_id::create("I2C_ADDR",,get_full_name());
+      this.I2C_ADDR = usi2_I2C_ADDR::type_id::create("I2C_ADDR",,get_full_name());
       this.I2C_ADDR.configure(this, null, "");
       this.I2C_ADDR.build();
          this.I2C_ADDR.add_hdl_path('{
@@ -1227,7 +1227,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.I2C_ADDR, `UVM_REG_ADDR_WIDTH'h24, "RW", 0);
 		this.I2C_ADDR_I2C_ADDR = this.I2C_ADDR.I2C_ADDR;
-      this.I2CM_CTRL = usi0_I2CM_CTRL::type_id::create("I2CM_CTRL",,get_full_name());
+      this.I2CM_CTRL = usi2_I2CM_CTRL::type_id::create("I2CM_CTRL",,get_full_name());
       this.I2CM_CTRL.configure(this, null, "");
       this.I2CM_CTRL.build();
          this.I2CM_CTRL.add_hdl_path('{
@@ -1245,7 +1245,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.SBYTE = this.I2CM_CTRL.SBYTE;
 		this.I2CM_CTRL_GCALL = this.I2CM_CTRL.GCALL;
 		this.GCALL = this.I2CM_CTRL.GCALL;
-      this.I2CM_CODE = usi0_I2CM_CODE::type_id::create("I2CM_CODE",,get_full_name());
+      this.I2CM_CODE = usi2_I2CM_CODE::type_id::create("I2CM_CODE",,get_full_name());
       this.I2CM_CODE.configure(this, null, "");
       this.I2CM_CODE.build();
          this.I2CM_CODE.add_hdl_path('{
@@ -1255,7 +1255,7 @@ class ral_block_usi0 extends uvm_reg_block;
       this.default_map.add_reg(this.I2CM_CODE, `UVM_REG_ADDR_WIDTH'h2C, "RW", 0);
 		this.I2CM_CODE_MCODE = this.I2CM_CODE.MCODE;
 		this.MCODE = this.I2CM_CODE.MCODE;
-      this.I2CS_CTRL = usi0_I2CS_CTRL::type_id::create("I2CS_CTRL",,get_full_name());
+      this.I2CS_CTRL = usi2_I2CS_CTRL::type_id::create("I2CS_CTRL",,get_full_name());
       this.I2CS_CTRL.configure(this, null, "");
       this.I2CS_CTRL.build();
          this.I2CS_CTRL.add_hdl_path('{
@@ -1265,7 +1265,7 @@ class ral_block_usi0 extends uvm_reg_block;
       this.default_map.add_reg(this.I2CS_CTRL, `UVM_REG_ADDR_WIDTH'h30, "RW", 0);
 		this.I2CS_CTRL_GCALL_MODE = this.I2CS_CTRL.GCALL_MODE;
 		this.GCALL_MODE = this.I2CS_CTRL.GCALL_MODE;
-      this.I2C_FM_DIV = usi0_I2C_FM_DIV::type_id::create("I2C_FM_DIV",,get_full_name());
+      this.I2C_FM_DIV = usi2_I2C_FM_DIV::type_id::create("I2C_FM_DIV",,get_full_name());
       this.I2C_FM_DIV.configure(this, null, "");
       this.I2C_FM_DIV.build();
          this.I2C_FM_DIV.add_hdl_path('{
@@ -1274,7 +1274,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.I2C_FM_DIV, `UVM_REG_ADDR_WIDTH'h34, "RW", 0);
 		this.I2C_FM_DIV_I2C_FM_DIV = this.I2C_FM_DIV.I2C_FM_DIV;
-      this.I2C_HOLD = usi0_I2C_HOLD::type_id::create("I2C_HOLD",,get_full_name());
+      this.I2C_HOLD = usi2_I2C_HOLD::type_id::create("I2C_HOLD",,get_full_name());
       this.I2C_HOLD.configure(this, null, "");
       this.I2C_HOLD.build();
          this.I2C_HOLD.add_hdl_path('{
@@ -1283,7 +1283,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.I2C_HOLD, `UVM_REG_ADDR_WIDTH'h38, "RW", 0);
 		this.I2C_HOLD_I2C_HOLD = this.I2C_HOLD.I2C_HOLD;
-      this.I2C_STA = usi0_I2C_STA::type_id::create("I2C_STA",,get_full_name());
+      this.I2C_STA = usi2_I2C_STA::type_id::create("I2C_STA",,get_full_name());
       this.I2C_STA.configure(this, null, "");
       this.I2C_STA.build();
          this.I2C_STA.add_hdl_path('{
@@ -1297,7 +1297,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.I2CM_DATA = this.I2C_STA.I2CM_DATA;
 		this.I2C_STA_I2CS_WORK = this.I2C_STA.I2CS_WORK;
 		this.I2CS_WORK = this.I2C_STA.I2CS_WORK;
-      this.SPI_MODE = usi0_SPI_MODE::type_id::create("SPI_MODE",,get_full_name());
+      this.SPI_MODE = usi2_SPI_MODE::type_id::create("SPI_MODE",,get_full_name());
       this.SPI_MODE.configure(this, null, "");
       this.SPI_MODE.build();
          this.SPI_MODE.add_hdl_path('{
@@ -1306,7 +1306,7 @@ class ral_block_usi0 extends uvm_reg_block;
          });
       this.default_map.add_reg(this.SPI_MODE, `UVM_REG_ADDR_WIDTH'h40, "RW", 0);
 		this.SPI_MODE_MS_MODE = this.SPI_MODE.MS_MODE;
-      this.SPI_CTRL = usi0_SPI_CTRL::type_id::create("SPI_CTRL",,get_full_name());
+      this.SPI_CTRL = usi2_SPI_CTRL::type_id::create("SPI_CTRL",,get_full_name());
       this.SPI_CTRL.configure(this, null, "");
       this.SPI_CTRL.build();
          this.SPI_CTRL.add_hdl_path('{
@@ -1326,7 +1326,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.NSS_TOGGLE = this.SPI_CTRL.NSS_TOGGLE;
 		this.SPI_CTRL_NSS_CTRL = this.SPI_CTRL.NSS_CTRL;
 		this.NSS_CTRL = this.SPI_CTRL.NSS_CTRL;
-      this.SPI_STA = usi0_SPI_STA::type_id::create("SPI_STA",,get_full_name());
+      this.SPI_STA = usi2_SPI_STA::type_id::create("SPI_STA",,get_full_name());
       this.SPI_STA.configure(this, null, "");
       this.SPI_STA.build();
          this.SPI_STA.add_hdl_path('{
@@ -1336,7 +1336,7 @@ class ral_block_usi0 extends uvm_reg_block;
       this.default_map.add_reg(this.SPI_STA, `UVM_REG_ADDR_WIDTH'h48, "RW", 0);
 		this.SPI_STA_SPI_WORKING = this.SPI_STA.SPI_WORKING;
 		this.SPI_WORKING = this.SPI_STA.SPI_WORKING;
-      this.INTR_CTRL = usi0_INTR_CTRL::type_id::create("INTR_CTRL",,get_full_name());
+      this.INTR_CTRL = usi2_INTR_CTRL::type_id::create("INTR_CTRL",,get_full_name());
       this.INTR_CTRL.configure(this, null, "");
       this.INTR_CTRL.build();
          this.INTR_CTRL.add_hdl_path('{
@@ -1350,7 +1350,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.RX_FIFO_TH = this.INTR_CTRL.RX_FIFO_TH;
 		this.INTR_CTRL_TH_MODE = this.INTR_CTRL.TH_MODE;
 		this.TH_MODE = this.INTR_CTRL.TH_MODE;
-      this.INTR_EN = usi0_INTR_EN::type_id::create("INTR_EN",,get_full_name());
+      this.INTR_EN = usi2_INTR_EN::type_id::create("INTR_EN",,get_full_name());
       this.INTR_EN.configure(this, null, "");
       this.INTR_EN.build();
          this.INTR_EN.add_hdl_path('{
@@ -1396,7 +1396,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.I2C_AERR_EN = this.INTR_EN.I2C_AERR_EN;
 		this.INTR_EN_SPI_STOP_EN = this.INTR_EN.SPI_STOP_EN;
 		this.SPI_STOP_EN = this.INTR_EN.SPI_STOP_EN;
-      this.INTR_STA = usi0_INTR_STA::type_id::create("INTR_STA",,get_full_name());
+      this.INTR_STA = usi2_INTR_STA::type_id::create("INTR_STA",,get_full_name());
       this.INTR_STA.configure(this, null, "");
       this.INTR_STA.build();
          this.INTR_STA.add_hdl_path('{
@@ -1438,7 +1438,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.I2C_AERR = this.INTR_STA.I2C_AERR;
 		this.INTR_STA_SPI_STOP = this.INTR_STA.SPI_STOP;
 		this.SPI_STOP = this.INTR_STA.SPI_STOP;
-      this.RAW_INTR_STA = usi0_RAW_INTR_STA::type_id::create("RAW_INTR_STA",,get_full_name());
+      this.RAW_INTR_STA = usi2_RAW_INTR_STA::type_id::create("RAW_INTR_STA",,get_full_name());
       this.RAW_INTR_STA.configure(this, null, "");
       this.RAW_INTR_STA.build();
          this.RAW_INTR_STA.add_hdl_path('{
@@ -1484,7 +1484,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.RAW_I2C_AERR = this.RAW_INTR_STA.RAW_I2C_AERR;
 		this.RAW_INTR_STA_RAW_SPI_STOP = this.RAW_INTR_STA.RAW_SPI_STOP;
 		this.RAW_SPI_STOP = this.RAW_INTR_STA.RAW_SPI_STOP;
-      this.INTR_MASK = usi0_INTR_MASK::type_id::create("INTR_MASK",,get_full_name());
+      this.INTR_MASK = usi2_INTR_MASK::type_id::create("INTR_MASK",,get_full_name());
       this.INTR_MASK.configure(this, null, "");
       this.INTR_MASK.build();
          this.INTR_MASK.add_hdl_path('{
@@ -1530,7 +1530,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.I2C_AERR_MASK = this.INTR_MASK.I2C_AERR_MASK;
 		this.INTR_MASK_SPI_STOP_MASK = this.INTR_MASK.SPI_STOP_MASK;
 		this.SPI_STOP_MASK = this.INTR_MASK.SPI_STOP_MASK;
-      this.INTR_CLR = usi0_INTR_CLR::type_id::create("INTR_CLR",,get_full_name());
+      this.INTR_CLR = usi2_INTR_CLR::type_id::create("INTR_CLR",,get_full_name());
       this.INTR_CLR.configure(this, null, "");
       this.INTR_CLR.build();
          this.INTR_CLR.add_hdl_path('{
@@ -1576,7 +1576,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.I2C_AERR_CLR = this.INTR_CLR.I2C_AERR_CLR;
 		this.INTR_CLR_SPI_STOP_CLR = this.INTR_CLR.SPI_STOP_CLR;
 		this.SPI_STOP_CLR = this.INTR_CLR.SPI_STOP_CLR;
-      this.DMA_CTRL = usi0_DMA_CTRL::type_id::create("DMA_CTRL",,get_full_name());
+      this.DMA_CTRL = usi2_DMA_CTRL::type_id::create("DMA_CTRL",,get_full_name());
       this.DMA_CTRL.configure(this, null, "");
       this.DMA_CTRL.build();
          this.DMA_CTRL.add_hdl_path('{
@@ -1588,7 +1588,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.TX_DMA_EN = this.DMA_CTRL.TX_DMA_EN;
 		this.DMA_CTRL_RX_DMA_EN = this.DMA_CTRL.RX_DMA_EN;
 		this.RX_DMA_EN = this.DMA_CTRL.RX_DMA_EN;
-      this.DMA_THRESHOLD = usi0_DMA_THRESHOLD::type_id::create("DMA_THRESHOLD",,get_full_name());
+      this.DMA_THRESHOLD = usi2_DMA_THRESHOLD::type_id::create("DMA_THRESHOLD",,get_full_name());
       this.DMA_THRESHOLD.configure(this, null, "");
       this.DMA_THRESHOLD.build();
          this.DMA_THRESHOLD.add_hdl_path('{
@@ -1600,7 +1600,7 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.TX_DMA_TH = this.DMA_THRESHOLD.TX_DMA_TH;
 		this.DMA_THRESHOLD_RX_DMA_TH = this.DMA_THRESHOLD.RX_DMA_TH;
 		this.RX_DMA_TH = this.DMA_THRESHOLD.RX_DMA_TH;
-      this.SPI_NSS_DATA = usi0_SPI_NSS_DATA::type_id::create("SPI_NSS_DATA",,get_full_name());
+      this.SPI_NSS_DATA = usi2_SPI_NSS_DATA::type_id::create("SPI_NSS_DATA",,get_full_name());
       this.SPI_NSS_DATA.configure(this, null, "");
       this.SPI_NSS_DATA.build();
          this.SPI_NSS_DATA.add_hdl_path('{
@@ -1612,9 +1612,9 @@ class ral_block_usi0 extends uvm_reg_block;
 		this.NSS_DATA = this.SPI_NSS_DATA.NSS_DATA;
    endfunction : build
 
-	`uvm_object_utils(ral_block_usi0)
+	`uvm_object_utils(ral_block_usi2)
 
-endclass : ral_block_usi0
+endclass : ral_block_usi2
 
 
 

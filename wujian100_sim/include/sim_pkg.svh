@@ -6,6 +6,7 @@ package sim_pkg;
   import yuu_ahb_pkg::*;
   import yuu_int_pkg::*;
   import i2c_pkg::*;
+  import uart_pkg::*;
 
   `include "sim_macro.svh"
   `include "sim_define.svh"
@@ -16,6 +17,8 @@ package sim_pkg;
   `include "ral_pwm.sv"
   `include "ral_rtc.sv"
   `include "ral_usi0.sv"
+  `include "ral_usi1.sv"
+  `include "ral_usi2.sv"
   `include "top_reg_model.sv"
 
   `include "env_config.svh"
@@ -29,4 +32,5 @@ package sim_pkg;
   `include "tim0_tim1_int_seq.svh"
   `include "rtc_int_seq.svh"
   `include "i2c_rx_int_seq.svh"
+  `include "uart_rx_int_seq.svh"
 endpackage

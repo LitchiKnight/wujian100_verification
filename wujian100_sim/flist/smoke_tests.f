@@ -6,3 +6,4 @@ $TB_PATH/test/smoke_test/pwm_smoke_test.sv
 $TB_PATH/test/smoke_test/rtc_smoke_test.sv
 $TB_PATH/test/smoke_test/i2c_slave_smoke_test.sv
 $TB_PATH/test/smoke_test/i2c_master_smoke_test.sv
+$TB_PATH/test/smoke_test/uart_rx_smoke_test.sv
