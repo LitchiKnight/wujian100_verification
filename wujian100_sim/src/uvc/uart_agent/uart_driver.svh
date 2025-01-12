@@ -27,7 +27,7 @@ task uart_driver::run_phase(uvm_phase phase);
   init_signal();
   forever begin
     seq_item_port.get_next_item(req);
-    `uvm_info(get_type_name(), $sformatf("get a sequence item:\n%s", req.sprint()), UVM_LOW)
+    `uvm_info(get_type_name(), $sformatf("get a sequence item:\n%s", req.sprint()), UVM_HIGH)
     vif.tx <= 1'b0;
     # td;
     for (int i = 0; i < cfg.data_bit; i++) begin
