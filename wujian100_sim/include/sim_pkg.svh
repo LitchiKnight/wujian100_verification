@@ -7,6 +7,7 @@ package sim_pkg;
   import yuu_int_pkg::*;
   import i2c_pkg::*;
   import uart_pkg::*;
+  import spi_pkg::*;
 
   `include "sim_macro.svh"
   `include "sim_define.svh"
@@ -33,4 +34,5 @@ package sim_pkg;
   `include "rtc_int_seq.svh"
   `include "i2c_rx_int_seq.svh"
   `include "uart_rx_int_seq.svh"
+  `include "spi_rx_int_seq.svh"
 endpackage

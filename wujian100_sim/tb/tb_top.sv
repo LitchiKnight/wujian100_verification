@@ -9,6 +9,7 @@ import yuu_int_pkg::*;
 import i2c_pkg::*;
 import uart_pkg::*;
 import sim_pkg::*;
+import spi_pkg::*;
 
 module tb_top;
   
@@ -48,6 +49,13 @@ module tb_top;
   uart_interface uart_if(
     .tx(u_top_hdl.PAD_USI1_SCLK),
     .rx(u_top_hdl.PAD_USI1_SD0)
+  );
+
+  spi_interface spi_if(
+    .sclk(u_top_hdl.PAD_USI2_SCLK),
+    .mosi(u_top_hdl.PAD_USI2_SD0),
+    .miso(u_top_hdl.PAD_USI2_SD1),
+    .cs(u_top_hdl.PAD_USI2_NSS)
   );
 
 ////////////////////////////////////clock define/////////////////////////////////

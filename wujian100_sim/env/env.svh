@@ -9,6 +9,7 @@ class top_env extends uvm_env;
   i2c_agent            i2c_mst_agt  ;
   i2c_agent            i2c_slv_agt  ;
   uart_agent           uart_agt     ;
+  spi_agent            spi_agt      ;
   virtual_sequencer    vseqr        ;
 
   function new(string name = "top_env", uvm_component parent);
@@ -34,6 +35,7 @@ function void top_env::build_phase(uvm_phase phase);
   i2c_mst_agt  = i2c_agent::type_id::create("i2c_mst_agt", this);
   i2c_slv_agt  = i2c_agent::type_id::create("i2c_slv_agt", this);
   uart_agt     = uart_agent::type_id::create("uart_agt", this);
+  spi_agt      = spi_agent::type_id::create("spi_agt", this);
   vseqr        = virtual_sequencer::type_id::create("vseqr", this);
 
   uvm_config_db#(yuu_ahb_master_config)::set(this, "ahb_mst0_agt", "cfg", env_cfg.ahb_mst0_cfg);
@@ -43,6 +45,7 @@ function void top_env::build_phase(uvm_phase phase);
   uvm_config_db#(i2c_config)::set(this, "i2c_mst_agt", "cfg", env_cfg.i2c_mst_cfg);
   uvm_config_db#(i2c_config)::set(this, "i2c_slv_agt", "cfg", env_cfg.i2c_slv_cfg);
   uvm_config_db#(uart_config)::set(this, "uart_agt", "cfg", env_cfg.uart_cfg);
+  uvm_config_db#(spi_config)::set(this, "spi_agt", "cfg", env_cfg.spi_cfg);
 endfunction
 
 function void top_env::connect_phase(uvm_phase phase);
@@ -54,6 +57,7 @@ function void top_env::connect_phase(uvm_phase phase);
   vseqr.ahb_mst2_seqr = ahb_mst2_agt.sequencer;
   vseqr.i2c_mst_seqr  = i2c_mst_agt.sequencer ;
   vseqr.uart_seqr     = uart_agt.sequencer    ;
+  vseqr.spi_seqr      = spi_agt.sequencer     ;
 
   env_cfg.regm.default_map.set_sequencer(ahb_mst0_agt.sequencer, ahb_mst0_agt.adapter);
   ahb_mst0_agt.predictor.map = env_cfg.regm.default_map;

@@ -8,6 +8,7 @@ class wujian100_base_test extends uvm_test;
   virtual i2c_interface            i2c_mst_vif  ;
   virtual i2c_interface            i2c_slv_vif  ;
   virtual uart_interface           uart_vif     ;
+  virtual spi_interface            spi_vif      ;
 
           env_config               env_cfg      ;
 		  top_env                  env          ;
@@ -118,6 +119,9 @@ function void wujian100_base_test::retrieve_vifs();
 
   if (!uvm_config_db #(virtual uart_interface)::get(this, "", "uart_if", uart_vif))
     `uvm_fatal(get_type_name(), "Cannot get uart interface, please check!")
+
+  if (!uvm_config_db #(virtual spi_interface)::get(this, "", "spi_if", spi_vif))
+    `uvm_fatal(get_type_name(), "Cannot get spi interface, please check!")
 endfunction
 
 function void wujian100_base_test::create_events();
@@ -172,10 +176,15 @@ function void wujian100_base_test::assign_config();
   env_cfg.uart_cfg.vif    = uart_vif;
   env_cfg.uart_cfg.events = this.events;
 
+  env_cfg.spi_cfg        = spi_config::type_id::create("spi_cfg");
+  env_cfg.spi_cfg.vif    = spi_vif;
+  env_cfg.spi_cfg.events = this.events;
+
   uvm_reg::include_coverage("*", UVM_CVR_ALL);
   env_cfg.regm = top_reg_model::type_id::create("regm");
   env_cfg.regm.configure(null, "");
   env_cfg.regm.build();
+  env_cfg.regm.default_map.set_auto_predict();
   env_cfg.regm.lock_model();
   env_cfg.regm.reset();
   env_cfg.regm.set_coverage(UVM_CVR_ALL);
@@ -187,6 +196,7 @@ function void wujian100_base_test::install_isr();
   rtc_int_seq       rtc_isr       ;
   i2c_rx_int_seq    i2c_rx_isr    ;
   uart_rx_int_seq   uart_rx_isr   ;
+  spi_rx_int_seq    spi_rx_isr    ;
 
   wdt_isr = wdt_int_seq::type_id::create("wdt_isr");
   wdt_isr.set_sequencer(vseqr);
@@ -207,6 +217,11 @@ function void wujian100_base_test::install_isr();
   uart_rx_isr = uart_rx_int_seq::type_id::create("uart_rx_isr");
   uart_rx_isr.set_sequencer(vseqr);
   env_cfg.int_cfg.install_isr(uart_rx_isr, 29, POSEDGE);
+
+  spi_rx_isr = spi_rx_int_seq::type_id::create("spi_rx_isr");
+  spi_rx_isr.set_sequencer(vseqr);
+  env_cfg.int_cfg.install_isr(spi_rx_isr, 30, POSEDGE);
+
 endfunction
 
 function void wujian100_base_test::create_env();

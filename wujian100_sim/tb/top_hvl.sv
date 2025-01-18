@@ -11,6 +11,7 @@ program top_hvl;
     uvm_config_db #(virtual i2c_interface)::set(null, "uvm_test_top", "i2c_mst_if", tb_top.i2c_mst_if);
     uvm_config_db #(virtual i2c_interface)::set(null, "uvm_test_top", "i2c_slv_if", tb_top.i2c_slv_if);
     uvm_config_db #(virtual uart_interface)::set(null, "uvm_test_top", "uart_if", tb_top.uart_if);
+    uvm_config_db #(virtual spi_interface)::set(null, "uvm_test_top", "spi_if", tb_top.spi_if);
   end
 
   initial begin

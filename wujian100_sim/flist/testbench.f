@@ -51,6 +51,16 @@ $TB_PATH/src/uvc/i2c_agent/i2c_package.sv
 $TB_PATH/src/uvc/uart_agent/uart_package.sv
 
 //-------------------------------------
+// SPI UVC Directories
+//-------------------------------------
++incdir+$TB_PATH/src/uvc/spi_agent
+
+//-------------------------------------
+// SPI UVC Files
+//-------------------------------------
+$TB_PATH/src/uvc/spi_agent/spi_package.sv
+
+//-------------------------------------
 // TB Define 
 //-------------------------------------
 +define+UVM_REG_NO_INDIVIDUAL_ACCESS

@@ -8,6 +8,7 @@ class env_config extends uvm_object;
   i2c_config            i2c_mst_cfg  ;
   i2c_config            i2c_slv_cfg  ;
   uart_config           uart_cfg     ;
+  spi_config            spi_cfg      ;
   uvm_event_pool        events       ;
   top_reg_model         regm         ;
 
