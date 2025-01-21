@@ -22,3 +22,21 @@ class spi_tx_base_sequence extends uvm_sequence #(spi_sequence_item);
     end
   endtask
 endclass
+
+class spi_rx_base_sequence extends uvm_sequence #(spi_sequence_item);
+  `uvm_object_utils(spi_rx_base_sequence)
+  `uvm_declare_p_sequencer(spi_sequencer)
+
+  spi_sequence_item rx_item;
+
+  function new(string name = "spi_rx_base_sequence");
+    super.new(name);
+  endfunction
+
+  virtual task body();
+    forever begin
+      p_sequencer.mon_item_fifo.get(rx_item);
+      `uvm_info(get_type_name(), $sformatf("spi received data 0x%0h", rx_item.data), UVM_LOW)
+    end
+  endtask
+endclass

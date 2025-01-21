@@ -51,7 +51,7 @@ task spi_driver::run_phase(uvm_phase phase);
 endtask
 
 task spi_driver::init_signals();
-  vif.sclk_oe <= cfg.cpol;
+  vif.sclk_oe <= 1'b1;
   vif.mosi_oe <= 1'b1;
   vif.miso_oe <= 1'b1;
   vif.cs_oe   <= 1'b1;
@@ -60,7 +60,7 @@ endtask
 task spi_driver::sclk_gen();
   fork
     forever begin
-     # (period/2) vif.sclk_oe = cfg.cpol ? ~vif.sclk_oe | gate : ~vif.sclk_oe & !gate;
+     # (period/2) vif.sclk_oe = ~vif.sclk_oe | gate;
     end
   join_none
 endtask

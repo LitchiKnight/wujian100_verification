@@ -36,7 +36,7 @@ endfunction
 function void spi_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
 
-  monitor.mon_out_port.connect(sequencer.mon_item_export);
+  monitor.mon_rx_port.connect(sequencer.mon_item_export);
   if (cfg.is_active == UVM_ACTIVE)
     driver.seq_item_port.connect(sequencer.seq_item_export);
 endfunction

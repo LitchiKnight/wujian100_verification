@@ -54,7 +54,7 @@ module tb_top;
   spi_interface spi_if(
     .sclk(u_top_hdl.PAD_USI2_SCLK),
     .mosi(u_top_hdl.PAD_USI2_SD0),
-    .miso(u_top_hdl.PAD_USI2_SD1),
+    .miso(u_top_hdl.PAD_USI2_SD0),
     .cs(u_top_hdl.PAD_USI2_NSS)
   );
 

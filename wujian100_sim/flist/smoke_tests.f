@@ -8,4 +8,5 @@ $TB_PATH/test/smoke_test/i2c_slave_smoke_test.sv
 $TB_PATH/test/smoke_test/i2c_master_smoke_test.sv
 $TB_PATH/test/smoke_test/uart_smoke_test.sv
 $TB_PATH/test/smoke_test/spi_slave_smoke_test.sv
+$TB_PATH/test/smoke_test/spi_master_smoke_test.sv
 
