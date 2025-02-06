@@ -20,6 +20,7 @@ package sim_pkg;
   `include "ral_usi0.sv"
   `include "ral_usi1.sv"
   `include "ral_usi2.sv"
+  `include "ral_gpio.sv"
   `include "top_reg_model.sv"
 
   `include "env_config.svh"

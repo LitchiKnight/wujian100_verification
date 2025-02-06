@@ -9,6 +9,7 @@ class top_reg_model extends uvm_reg_block;
   ral_block_usi0 usi0 ;
   ral_block_usi1 usi1 ;
   ral_block_usi2 usi2 ;
+  ral_block_gpio gpio ;
 
   function new(string name = "top_reg_model");
     super.new(name);
@@ -59,4 +60,9 @@ function void top_reg_model::build();
   usi2.configure(this, "");
   usi2.build();
   default_map.add_submap(usi2.default_map, `USI2_REG_BASE_ADDR);
+
+  gpio = ral_block_gpio::type_id::create("gpio");
+  gpio.configure(this, "");
+  gpio.build();
+  default_map.add_submap(gpio.default_map, `GPIO_REG_BASE_ADDR);
 endfunction
