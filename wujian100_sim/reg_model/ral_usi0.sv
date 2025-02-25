@@ -115,7 +115,7 @@ class usi0_CLK_DIV1 extends uvm_reg;
 	endfunction: new
    virtual function void build();
       this.CLK_DIV1 = uvm_reg_field::type_id::create("CLK_DIV1",,get_full_name());
-      this.CLK_DIV1.configure(this, 24, 0, "RW", 0, 24'h20, 1, 0, 1);
+      this.CLK_DIV1.configure(this, 24, 0, "RW", 0, 24'h30, 1, 0, 1);
    endfunction: build
 
 	`uvm_object_utils(usi0_CLK_DIV1)
