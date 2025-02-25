@@ -12,6 +12,7 @@
 +incdir+$VIP_PATH/yuu_ahb/pkg/yuu_common/src/sv
 +incdir+$VIP_PATH/yuu_ahb/include
 +incdir+$VIP_PATH/yuu_ahb/src/sv
++incdir+$VIP_PATH/yuu_ahb/seq
 
 //-------------------------------------
 // AHB VIP Files
