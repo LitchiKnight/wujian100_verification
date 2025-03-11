@@ -148,7 +148,7 @@ function string env_config::get_memory_hdl(memory_t  mem_type,
   case (mem_type)
     INST_SRAM: begin
       case (byte_addr)
-        0: hdl = $sformatf("%s[%0d]", `"`INST_SRAM_HDL1`", word_addr);
+        0: hdl = $sformatf("%s[%0d]", `"`INST_SRAM_HDL0`", word_addr);
         1: hdl = $sformatf("%s[%0d]", `"`INST_SRAM_HDL1`", word_addr);
         2: hdl = $sformatf("%s[%0d]", `"`INST_SRAM_HDL2`", word_addr);
         3: hdl = $sformatf("%s[%0d]", `"`INST_SRAM_HDL3`", word_addr);

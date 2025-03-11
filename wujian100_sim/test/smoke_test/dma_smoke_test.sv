@@ -18,10 +18,9 @@ task dma_smoke_test::run_smoke_test();
   foreach(wr_data[i]) begin
     wr_data[i] = {4{byte'(i)}};
     env_cfg.direct_word_write_memory(wr_data[i], DATA_SRAM, i);
+    env_cfg.direct_word_write_memory('hFFFF_FFFF, INST_SRAM, i);
   end
   dmac_int_ev = events.get("dmac_int_ev");
-
-  write_memory(DATA_SRAM, 'h0, wr_data, 16);
 
   write_register(`DATA_SRAM_START_ADDR, "SAR0", "dma");
   write_register(`INST_SRAM_START_ADDR, "DAR0", "dma");
