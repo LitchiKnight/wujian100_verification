@@ -36,4 +36,5 @@ package sim_pkg;
   `include "i2c_rx_int_seq.svh"
   `include "uart_rx_int_seq.svh"
   `include "spi_rx_int_seq.svh"
+  `include "dmac_int_seq.svh"
 endpackage

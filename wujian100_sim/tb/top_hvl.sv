@@ -15,7 +15,12 @@ program top_hvl;
   end
 
   initial begin
-    $fsdbDumpfile("wave.fsdb");
+    string casename;
+
+    if ($value$plusargs("casename=%s", casename))
+      $fsdbDumpfile($sformatf("%s.fsdb", casename));
+    else
+      $fsdbDumpfile("wave.fsdb");
     $fsdbDumpvars(0, "+all", "+functions");
     $fsdbDumpMDA();
   end

@@ -59,7 +59,10 @@ comp: dir
 
 run:
 	@mkdir -p $(LOG_PATH)/$(SIM_LOG_DIR)/$(UVM_TEST)
-	./simv +UVM_TESTNAME=$(UVM_TEST) +ntb_random_seed_automatic -l $(LOG_PATH)/$(SIM_LOG_DIR)/$(UVM_TEST)/sim.log +UVM_VERBOSITY=$(UVM_VERBOSITY) +define+WAVES_FSDB
+	./simv +UVM_TESTNAME=$(UVM_TEST) +ntb_random_seed_automatic -l $(LOG_PATH)/$(SIM_LOG_DIR)/$(UVM_TEST)/sim.log +UVM_VERBOSITY=$(UVM_VERBOSITY) +define+WAVES_FSDB +casename=$(UVM_TEST)
+
+vd:
+	verdi -sv -f $(DUT_F) $(DUMMY_F) $(TB_F) -top tb_top -ssf wave.fsdb &
 
 clean:
 	rm -rf simv* csrc ucli.key

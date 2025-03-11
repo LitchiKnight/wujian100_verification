@@ -21,6 +21,11 @@ $VIP_PATH/yuu_ahb/pkg/yuu_common/include/yuu_common_pkg.sv
 $VIP_PATH/yuu_ahb/include/yuu_ahb_pkg.sv
 
 //-------------------------------------
+// INT VIP Defines
+//-------------------------------------
++define+YUU_MAX_INT_IDX=63
+
+//-------------------------------------
 // INT VIP Directories
 //-------------------------------------
 +incdir+$VIP_PATH/yuu_int/include
@@ -93,3 +98,4 @@ $TB_PATH/tb/tb_top.sv
 //-------------------------------------
 -f $TB_PATH/flist/base_tests.f
 -f $TB_PATH/flist/smoke_tests.f
+-f $TB_PATH/flist/dma_tests.f

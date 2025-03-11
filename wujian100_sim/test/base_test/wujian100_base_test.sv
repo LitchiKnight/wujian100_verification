@@ -197,6 +197,7 @@ function void wujian100_base_test::install_isr();
   i2c_rx_int_seq    i2c_rx_isr    ;
   uart_rx_int_seq   uart_rx_isr   ;
   spi_rx_int_seq    spi_rx_isr    ;
+  dmac_int_seq      dmac_isr      ;
 
   wdt_isr = wdt_int_seq::type_id::create("wdt_isr");
   wdt_isr.set_sequencer(vseqr);
@@ -222,6 +223,9 @@ function void wujian100_base_test::install_isr();
   spi_rx_isr.set_sequencer(vseqr);
   env_cfg.int_cfg.install_isr(spi_rx_isr, 30, POSEDGE);
 
+  dmac_isr = dmac_int_seq::type_id::create("dmac_isr");
+  dmac_isr.set_sequencer(vseqr);
+  env_cfg.int_cfg.install_isr(dmac_isr, 32, POSEDGE);
 endfunction
 
 function void wujian100_base_test::create_env();
