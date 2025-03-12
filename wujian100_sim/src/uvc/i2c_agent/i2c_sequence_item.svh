@@ -12,4 +12,13 @@ class i2c_sequence_item extends uvm_sequence_item;
   function new(string name = "i2c_sequence_item");
     super.new(name);
   endfunction
+
+  constraint default_c {
+    cmd == I2C_SEND_SOF -> data == 'h0;
+    cmd == I2C_RCV_SOF  -> data == 'h0;
+    cmd == I2C_RCV_DATA -> data == 'h0;
+	cmd == I2C_RCV_ACK  -> data == 'h0;
+    cmd == I2C_SEND_EOF -> data == 'h0;
+    cmd == I2C_RCV_EOF  -> data == 'h0;
+  };
 endclass

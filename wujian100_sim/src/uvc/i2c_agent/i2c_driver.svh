@@ -108,16 +108,18 @@ task i2c_driver::scl_gen();
 	    forever begin
 		  i2c_drive_sof.wait_trigger();
 	      fork
-		    fork
-		      forever begin
-                # (period/2) vif.scl_oe = ~vif.scl_oe;
-		  	  end
-			  begin
-		  	    i2c_drive_eof.wait_trigger();
-			    vif.scl_oe <= 1'b1;
-			  end
-		    join_any
-		    disable fork;
+		    begin
+		      fork
+		        forever begin
+                  # (period/2) vif.scl_oe = ~vif.scl_oe;
+		  	    end
+			    begin
+		  	      i2c_drive_eof.wait_trigger();
+			      vif.scl_oe <= 1'b1;
+			    end
+		      join_any
+		      disable fork;
+			end
 		  join
 	    end
 	  end
