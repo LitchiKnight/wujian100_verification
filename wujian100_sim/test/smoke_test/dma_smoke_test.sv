@@ -9,12 +9,11 @@ class dma_smoke_test extends smoke_base_test;
 endclass
 
 task dma_smoke_test::run_smoke_test();
-   bit[31:0] wr_data[]    ;
-   bit[31:0] rd_data[]    ;
-   bit[31:0] int_dma_flag ;
-   uvm_event dmac_int_ev  ;
+  bit[31:0] wr_data[]   ;
+  bit[31:0] rd_data[]   ;
+  uvm_event dmac_int_ev ;
 
-   wr_data = new[16];
+  wr_data = new[16];
   foreach(wr_data[i]) begin
     wr_data[i] = {4{byte'(i)}};
     env_cfg.direct_word_write_memory(wr_data[i], DATA_SRAM, i);

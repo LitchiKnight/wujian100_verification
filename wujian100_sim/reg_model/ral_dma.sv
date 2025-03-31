@@ -2132,10 +2132,10 @@ class ral_reg_CH10_SOFT_REQ extends uvm_reg;
 endclass : ral_reg_CH10_SOFT_REQ
 
 
-class ral_reg_C10_EN extends uvm_reg;
+class ral_reg_CH10_EN extends uvm_reg;
 	rand uvm_reg_field ch10_en;
 
-	function new(string name = "C10_EN");
+	function new(string name = "CH10_EN");
 		super.new(name, 32,build_coverage(UVM_NO_COVERAGE));
 	endfunction: new
    virtual function void build();
@@ -2143,9 +2143,9 @@ class ral_reg_C10_EN extends uvm_reg;
       this.ch10_en.configure(this, 1, 0, "RW", 0, 1'h0, 1, 0, 1);
    endfunction: build
 
-	`uvm_object_utils(ral_reg_C10_EN)
+	`uvm_object_utils(ral_reg_CH10_EN)
 
-endclass : ral_reg_C10_EN
+endclass : ral_reg_CH10_EN
 
 
 class ral_reg_SAR11 extends uvm_reg;
@@ -3299,7 +3299,7 @@ class ral_block_dma extends uvm_reg_block;
 	rand ral_reg_CH10_INT_STATUS CH10_INT_STATUS;
 	rand ral_reg_CH10_INT_CLEAR CH10_INT_CLEAR;
 	rand ral_reg_CH10_SOFT_REQ CH10_SOFT_REQ;
-	rand ral_reg_C10_EN C10_EN;
+	rand ral_reg_CH10_EN CH10_EN;
 	rand ral_reg_SAR11 SAR11;
 	rand ral_reg_DAR11 DAR11;
 	rand ral_reg_CH11_CTRL_A CH11_CTRL_A;
@@ -3642,7 +3642,7 @@ class ral_block_dma extends uvm_reg_block;
 	rand uvm_reg_field CH10_INT_CLEAR_clearhtfr;
 	rand uvm_reg_field CH10_INT_CLEAR_cleartrgetcmpfr;
 	rand uvm_reg_field CH10_SOFT_REQ_soft_req;
-	rand uvm_reg_field C10_EN_ch10_en;
+	rand uvm_reg_field CH10_EN_ch10_en;
 	rand uvm_reg_field ch10_en;
 	rand uvm_reg_field SAR11_SAR11;
 	rand uvm_reg_field DAR11_DAR11;
@@ -4899,16 +4899,16 @@ class ral_block_dma extends uvm_reg_block;
          });
       this.default_map.add_reg(this.CH10_SOFT_REQ, `UVM_REG_ADDR_WIDTH'h1FC, "RW", 0);
 		this.CH10_SOFT_REQ_soft_req = this.CH10_SOFT_REQ.soft_req;
-      this.C10_EN = ral_reg_C10_EN::type_id::create("C10_EN",,get_full_name());
-      this.C10_EN.configure(this, null, "");
-      this.C10_EN.build();
-         this.C10_EN.add_hdl_path('{
+      this.CH10_EN = ral_reg_CH10_EN::type_id::create("CH10_EN",,get_full_name());
+      this.CH10_EN.configure(this, null, "");
+      this.CH10_EN.build();
+         this.CH10_EN.add_hdl_path('{
 
-            '{"C10_EN", -1, -1}
+            '{"CH10_EN", -1, -1}
          });
-      this.default_map.add_reg(this.C10_EN, `UVM_REG_ADDR_WIDTH'h200, "RW", 0);
-		this.C10_EN_ch10_en = this.C10_EN.ch10_en;
-		this.ch10_en = this.C10_EN.ch10_en;
+      this.default_map.add_reg(this.CH10_EN, `UVM_REG_ADDR_WIDTH'h200, "RW", 0);
+		this.CH10_EN_ch10_en = this.CH10_EN.ch10_en;
+		this.ch10_en = this.CH10_EN.ch10_en;
       this.SAR11 = ral_reg_SAR11::type_id::create("SAR11",,get_full_name());
       this.SAR11.configure(this, null, "");
       this.SAR11.build();

@@ -37,4 +37,6 @@ package sim_pkg;
   `include "uart_rx_int_seq.svh"
   `include "spi_rx_int_seq.svh"
   `include "dmac_int_seq.svh"
+
+  `include "dma_launch_seq.svh"
 endpackage
