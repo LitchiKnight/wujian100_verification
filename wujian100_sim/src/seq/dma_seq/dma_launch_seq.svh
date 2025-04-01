@@ -46,7 +46,6 @@ task dma_launch_seq::body();
   p_sequencer.env_cfg.set_reg_value({8'h0, byte_len-1, 4'h0, sinc, dinc, src_width, dst_width}, $sformatf("CH%0d_CTRL_A", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value({13'h0, prot_ctl, dst_dtlgc, src_dtlgc, 10'h0, trg_tmdc, int_en}, $sformatf("CH%0d_CTRL_B", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value({28'h0, int_mask}, $sformatf("CH%0d_INT_MASK", ch_id), "dma");
-  p_sequencer.env_cfg.set_reg_value({31'h0, int_en}, $sformatf("CH%0d_EN", ch_id), "dma");
+  p_sequencer.env_cfg.set_reg_value(31'h1, $sformatf("CH%0d_EN", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value({31'h0, soft_req}, $sformatf("CH%0d_SOFT_REQ", ch_id), "dma");
-  p_sequencer.env_cfg.set_reg_value(32'h1, "DMACCFG", "dma");
 endtask

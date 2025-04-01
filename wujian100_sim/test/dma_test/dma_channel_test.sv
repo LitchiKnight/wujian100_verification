@@ -15,6 +15,8 @@ task dma_channel_test::run_dma_test();
   bit[31:0] rd_data[]   ;
   uvm_event dmac_int_ev ;
 
+  write_register(32'h1, "DMACCFG", "dma");
+
   for (int ch = 0; ch < 16; ch++) begin
     wr_data = new[16];
     std::randomize(wr_data);
