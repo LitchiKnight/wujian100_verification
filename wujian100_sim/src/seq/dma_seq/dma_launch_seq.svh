@@ -2,7 +2,7 @@ class dma_launch_seq extends uvm_sequence;
   rand bit[ 3:0] ch_id     ;
   rand bit[31:0] src_addr  ;
   rand bit[31:0] dst_addr  ;
-  rand bit[11:0] len       ;
+  rand bit[11:0] byte_len  ;
   rand bit[ 1:0] sinc      ;
   rand bit[ 1:0] dinc      ;
   rand bit[ 1:0] src_width ;
@@ -22,7 +22,7 @@ class dma_launch_seq extends uvm_sequence;
   `uvm_object_utils_begin(dma_launch_seq)
     `uvm_field_int(src_addr , UVM_ALL_ON)
     `uvm_field_int(dst_addr , UVM_ALL_ON)
-    `uvm_field_int(len      , UVM_ALL_ON)
+    `uvm_field_int(byte_len , UVM_ALL_ON)
     `uvm_field_int(sinc     , UVM_ALL_ON)
     `uvm_field_int(dinc     , UVM_ALL_ON)
     `uvm_field_int(src_width, UVM_ALL_ON)
@@ -43,7 +43,7 @@ endclass
 task dma_launch_seq::body();
   p_sequencer.env_cfg.set_reg_value(src_addr, $sformatf("SAR%0d", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value(dst_addr, $sformatf("DAR%0d", ch_id), "dma");
-  p_sequencer.env_cfg.set_reg_value({8'h0, len-1, 4'h0, sinc, dinc, src_width, dst_width}, $sformatf("CH%0d_CTRL_A", ch_id), "dma");
+  p_sequencer.env_cfg.set_reg_value({8'h0, byte_len-1, 4'h0, sinc, dinc, src_width, dst_width}, $sformatf("CH%0d_CTRL_A", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value({13'h0, prot_ctl, dst_dtlgc, src_dtlgc, 10'h0, trg_tmdc, int_en}, $sformatf("CH%0d_CTRL_B", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value({28'h0, int_mask}, $sformatf("CH%0d_INT_MASK", ch_id), "dma");
   p_sequencer.env_cfg.set_reg_value({31'h0, int_en}, $sformatf("CH%0d_EN", ch_id), "dma");

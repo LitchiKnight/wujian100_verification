@@ -17,10 +17,11 @@ task dma_channel_test::run_dma_test();
 
   for (int ch = 0; ch < 16; ch++) begin
     wr_data = new[16];
+    std::randomize(wr_data);
     foreach(wr_data[i]) begin
-      wr_data[i] = {4{byte'(i)}};
-      env_cfg.direct_word_write_memory(wr_data[i], DATA_SRAM, i+ch*'h100);
-      env_cfg.direct_word_write_memory('hFFFF_FFFF, INST_SRAM, i+ch*'h100);
+      // wr_data[i] = {4{byte'(i)}};
+      env_cfg.direct_word_write_memory(wr_data[i], DATA_SRAM, i+ch*'h40);
+      env_cfg.direct_word_write_memory('hFFFF_FFFF, INST_SRAM, i+ch*'h40);
     end
     dmac_int_ev = events.get("dmac_int_ev");
 
@@ -29,8 +30,7 @@ task dma_channel_test::run_dma_test();
       ch_id     == ch                             ;
       src_addr  == `DATA_SRAM_START_ADDR+ch*'h100 ;
       dst_addr  == `INST_SRAM_START_ADDR+ch*'h100 ;
-      len % 4   == 0                              ;
-      len inside {[4:64]}                         ;
+      byte_len  == 64                             ;
       sinc      == 0                              ;
       dinc      == 0                              ;
       src_width == 2                              ;
@@ -47,6 +47,10 @@ task dma_channel_test::run_dma_test();
 
     dmac_int_ev.wait_trigger();
     read_memory(rd_data, INST_SRAM, ch*'h100, 16);
+    foreach(rd_data[i]) begin
+      if (rd_data[i] != wr_data[i])
+        `uvm_error(get_type_name(), $sformatf("data compare failed, wr_addr: 0x%8h, wr_data: 0x%8h, rd_addr: 0x%8h, rd_data: 0x%8h", seq.src_addr, wr_data[i], seq.dst_addr, wr_data[i]))
+    end
   end
 endtask
 

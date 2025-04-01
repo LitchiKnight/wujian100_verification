@@ -5356,7 +5356,7 @@ class ral_block_dma extends uvm_reg_block;
 
             '{"CH15_INT_MASK", -1, -1}
          });
-      this.default_map.add_reg(this.CH15_INT_MASK, `UVM_REG_ADDR_WIDTH'h2F0, "RW", 0);
+      this.default_map.add_reg(this.CH15_INT_MASK, `UVM_REG_ADDR_WIDTH'h2E0, "RW", 0);
 		this.CH15_INT_MASK_maskErr = this.CH15_INT_MASK.maskErr;
 		this.CH15_INT_MASK_masktfr = this.CH15_INT_MASK.masktfr;
 		this.CH15_INT_MASK_maskhtfr = this.CH15_INT_MASK.maskhtfr;
@@ -5368,7 +5368,7 @@ class ral_block_dma extends uvm_reg_block;
 
             '{"CH15_INT_STATUS", -1, -1}
          });
-      this.default_map.add_reg(this.CH15_INT_STATUS, `UVM_REG_ADDR_WIDTH'h2F4, "RW", 0);
+      this.default_map.add_reg(this.CH15_INT_STATUS, `UVM_REG_ADDR_WIDTH'h2E4, "RW", 0);
 		this.CH15_INT_STATUS_statusErr = this.CH15_INT_STATUS.statusErr;
 		this.CH15_INT_STATUS_statusfr = this.CH15_INT_STATUS.statusfr;
 		this.CH15_INT_STATUS_statushtfr = this.CH15_INT_STATUS.statushtfr;
@@ -5380,7 +5380,7 @@ class ral_block_dma extends uvm_reg_block;
 
             '{"CH15_INT_CLEAR", -1, -1}
          });
-      this.default_map.add_reg(this.CH15_INT_CLEAR, `UVM_REG_ADDR_WIDTH'h2F8, "RW", 0);
+      this.default_map.add_reg(this.CH15_INT_CLEAR, `UVM_REG_ADDR_WIDTH'h2E8, "RW", 0);
 		this.CH15_INT_CLEAR_clearErr = this.CH15_INT_CLEAR.clearErr;
 		this.CH15_INT_CLEAR_cleartfr = this.CH15_INT_CLEAR.cleartfr;
 		this.CH15_INT_CLEAR_clearhtfr = this.CH15_INT_CLEAR.clearhtfr;
@@ -5392,7 +5392,7 @@ class ral_block_dma extends uvm_reg_block;
 
             '{"CH15_SOFT_REQ", -1, -1}
          });
-      this.default_map.add_reg(this.CH15_SOFT_REQ, `UVM_REG_ADDR_WIDTH'h2FC, "RW", 0);
+      this.default_map.add_reg(this.CH15_SOFT_REQ, `UVM_REG_ADDR_WIDTH'h2EC, "RW", 0);
 		this.CH15_SOFT_REQ_soft_req = this.CH15_SOFT_REQ.soft_req;
       this.CH15_EN = ral_reg_CH15_EN::type_id::create("CH15_EN",,get_full_name());
       this.CH15_EN.configure(this, null, "");
@@ -5401,7 +5401,7 @@ class ral_block_dma extends uvm_reg_block;
 
             '{"CH15_EN", -1, -1}
          });
-      this.default_map.add_reg(this.CH15_EN, `UVM_REG_ADDR_WIDTH'h300, "RW", 0);
+      this.default_map.add_reg(this.CH15_EN, `UVM_REG_ADDR_WIDTH'h2F0, "RW", 0);
 		this.CH15_EN_ch15_en = this.CH15_EN.ch15_en;
 		this.ch15_en = this.CH15_EN.ch15_en;
       this.CHSR = ral_reg_CHSR::type_id::create("CHSR",,get_full_name());
