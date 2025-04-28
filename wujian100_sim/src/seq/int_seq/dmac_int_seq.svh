@@ -7,28 +7,30 @@ class dmac_int_seq extends uvm_sequence;
   endfunction
 
   extern task body();
-  extern task handle_intrrupt(bit[3:0] id);
 endclass
 
 task dmac_int_seq::body();
   uvm_event dmac_int_ev ;
 
   dmac_int_ev = p_sequencer.env_cfg.events.get("dmac_int_ev");
-  for(int i = 0; i < 16; i++)
-    handle_intrrupt(i);
+  do begin
+    for(int i = 0; i < 16; i++) begin
+      bit[31:0] int_mask   ;
+      bit[31:0] int_status ;
+
+      p_sequencer.env_cfg.get_reg_value(int_status, $sformatf("CH%0d_INT_STATUS", i), "dma");
+      if (int_status) begin
+        p_sequencer.env_cfg.get_reg_value(int_mask  , $sformatf("CH%0d_INT_MASK" , i) , "dma");
+        if (int_status & int_mask) begin
+          p_sequencer.env_cfg.set_reg_value('h0       , $sformatf("CH%0d_INT_MASK" , i) , "dma");
+          p_sequencer.env_cfg.set_reg_value(int_status, $sformatf("CH%0d_INT_CLEAR", i) , "dma");
+          p_sequencer.env_cfg.set_reg_value(int_mask  , $sformatf("CH%0d_INT_MASK" , i) , "dma");
+          break;
+        end
+      end
+    end
+  end while(p_sequencer.env_cfg.int_cfg.vif.interrupt != 0);
 
   dmac_int_ev.trigger();
 endtask
 
-task dmac_int_seq::handle_intrrupt(bit[3:0] id);
-  bit[31:0] int_mask   ;
-  bit[31:0] int_status ;
-
-  p_sequencer.env_cfg.get_reg_value(int_status, $sformatf("CH%0d_INT_STATUS", id), "dma");
-  if (int_status != 0) begin
-    p_sequencer.env_cfg.get_reg_value(int_mask  , $sformatf("CH%0d_INT_MASK" , id) , "dma");
-    p_sequencer.env_cfg.set_reg_value('h0       , $sformatf("CH%0d_INT_MASK" , id) , "dma");
-    p_sequencer.env_cfg.set_reg_value(int_status, $sformatf("CH%0d_INT_CLEAR", id) , "dma");
-    p_sequencer.env_cfg.set_reg_value(int_mask  , $sformatf("CH%0d_INT_MASK" , id) , "dma");
-  end
-endtask

@@ -37,6 +37,21 @@ class dma_launch_seq extends uvm_sequence;
   `uvm_object_utils_end
   `uvm_declare_p_sequencer(virtual_sequencer)
 
+  constraint default_c {
+    soft byte_len inside {[1:4096]};
+    soft sinc      == 0 ;
+    soft dinc      == 0 ;
+    soft src_width == 2 ;
+    soft dst_width == 2 ;
+    soft prot_ctl  == 0 ;
+    soft src_dtlgc == 0 ;
+    soft dst_dtlgc == 0 ;
+    soft trg_tmdc  == 2 ;
+    soft int_en    == 1 ;
+    soft int_mask  == 2 ;
+    soft soft_req  == 1 ;
+  }
+
   extern virtual task body();
 endclass
 
