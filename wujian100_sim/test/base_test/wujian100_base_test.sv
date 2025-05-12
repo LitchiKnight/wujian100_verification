@@ -44,20 +44,23 @@ class wujian100_base_test extends uvm_test;
                                             input  bit[`DATA_BITS-1:0] data[],
                                             input  int                 len);
   
-  extern virtual task          write_register(bit[31:0] data,
-                                              string    reg_name,
-                                              string    block_name);
-  extern virtual task          read_register(output bit[31:0] data,
-                                             input  string    reg_name,
-											 input  string    block_name);
+  extern virtual task          write_register(bit[31:0]  data,
+                                              string     reg_name,
+                                              string     block_name,
+                                              uvm_path_e path = UVM_FRONTDOOR);
+  extern virtual task          read_register(output bit[31:0]  data,
+                                             input  string     reg_name,
+                                             input  string     block_name,
+                                             input  uvm_path_e path = UVM_FRONTDOOR);
   extern virtual task          write_field(bit[31:0] data,
                                            string    field_name,
                                            string    reg_name,
                                            string    block_name);
-  extern virtual task          read_field(output bit[31:0] data,
-                                          input  string    field_name,
-                                          input  string    reg_name,
-                                          input  string    block_name);
+  extern virtual task          read_field(output bit[31:0]  data,
+                                          input  string     field_name,
+                                          input  string     reg_name,
+                                          input  string     block_name,
+                                          input  uvm_path_e path = UVM_FRONTDOOR);
 endclass
 
 function void wujian100_base_test::build_phase(uvm_phase phase);
@@ -182,7 +185,7 @@ function void wujian100_base_test::assign_config();
 
   uvm_reg::include_coverage("*", UVM_CVR_ALL);
   env_cfg.regm = top_reg_model::type_id::create("regm");
-  env_cfg.regm.configure(null, "");
+  env_cfg.regm.configure(null, "tb_top.u_top_hdl.dut");
   env_cfg.regm.build();
   env_cfg.regm.default_map.set_auto_predict();
   env_cfg.regm.lock_model();
@@ -283,16 +286,18 @@ task wujian100_base_test::write_memory(input  memory_t            mem_type,
   mem_wr_seq.start(vseqr.ahb_mst0_seqr);
 endtask
 
-task wujian100_base_test::write_register(bit[31:0] data,
-                                         string    reg_name,
-                                         string    block_name);
-  env_cfg.set_reg_value(data, reg_name, block_name);
+task wujian100_base_test::write_register(bit[31:0]  data,
+                                         string     reg_name,
+                                         string     block_name,
+                                         uvm_path_e path = UVM_FRONTDOOR);
+  env_cfg.set_reg_value(data, reg_name, block_name, path);
 endtask
 
-task wujian100_base_test::read_register(output bit[31:0] data,
-                                        input  string    reg_name,
-										input  string    block_name);
-  env_cfg.get_reg_value(data, reg_name, block_name);
+task wujian100_base_test::read_register(output bit[31:0]  data,
+                                        input  string     reg_name,
+                                        input  string     block_name,
+                                        input  uvm_path_e path = UVM_FRONTDOOR);
+  env_cfg.get_reg_value(data, reg_name, block_name, path);
 endtask
 
 task wujian100_base_test::write_field(bit[31:0] data,
@@ -302,9 +307,10 @@ task wujian100_base_test::write_field(bit[31:0] data,
   env_cfg.set_field_value(data, field_name, reg_name, block_name);
 endtask
 
-task wujian100_base_test::read_field(output bit[31:0] data,
-                                     input  string    field_name,
-                                     input  string    reg_name,
-                                     input  string    block_name);
-  env_cfg.get_field_value(data, field_name, reg_name, block_name);
+task wujian100_base_test::read_field(output bit[31:0]  data,
+                                     input  string     field_name,
+                                     input  string     reg_name,
+                                     input  string     block_name,
+                                     input  uvm_path_e path = UVM_FRONTDOOR);
+  env_cfg.get_field_value(data, field_name, reg_name, block_name, path);
 endtask

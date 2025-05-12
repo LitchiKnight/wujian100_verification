@@ -16,20 +16,23 @@ class env_config extends uvm_object;
     super.new(name);
   endfunction
 
-  extern task set_reg_value(bit[31:0] data,
-                            string    reg_name,
-                            string    block_name);
-  extern task get_reg_value(output bit[31:0] data,
-                            input  string    reg_name,
-							input  string    block_name);
+  extern task set_reg_value(bit[31:0]  data,
+                            string     reg_name,
+                            string     block_name,
+                            uvm_path_e path = UVM_FRONTDOOR);
+  extern task get_reg_value(output bit[31:0]  data,
+                            input  string     reg_name,
+                            input  string     block_name,
+                            input  uvm_path_e path = UVM_FRONTDOOR);
   extern task set_field_value(bit[31:0] data,
                               string    field_name,
                               string    reg_name,
                               string    block_name);
-  extern task get_field_value(output bit[31:0] data,
-                              input  string    field_name,
-                              input  string    reg_name,
-                              input  string    block_name);
+  extern task get_field_value(output bit[31:0]  data,
+                              input  string     field_name,
+                              input  string     reg_name,
+                              input  string     block_name,
+                              input  uvm_path_e path = UVM_FRONTDOOR);
   extern function string get_memory_hdl(memory_t  mem_type,
                                         bit[31:0] addr);
   extern function void direct_byte_write_memory(bit[7:0]  data,
@@ -46,9 +49,10 @@ class env_config extends uvm_object;
                                                input  bit[31:0] addr);
 endclass
 
-task env_config::set_reg_value(bit[31:0] data,
-                               string    reg_name,
-                               string    block_name);
+task env_config::set_reg_value(bit[31:0]  data,
+                               string     reg_name,
+                               string     block_name,
+                               uvm_path_e path = UVM_FRONTDOOR);
   uvm_reg_block block    ;
   uvm_reg       register ;
   uvm_status_e  status   ;
@@ -56,17 +60,18 @@ task env_config::set_reg_value(bit[31:0] data,
   block    = regm.get_block_by_name(block_name);
   register = block.get_reg_by_name(reg_name);
 
-  register.write(status, data);
+  register.write(status, data, path);
 
   if (status == UVM_IS_OK)
-    `uvm_info(get_type_name(), $sformatf("write 0x%8h to register %s.%s", data, block_name, reg_name), UVM_LOW)
+    `uvm_info(get_type_name(), $sformatf("[%s] write 0x%8h to register %s.%s", path, data, block_name, reg_name), UVM_LOW)
   else
-    `uvm_error(get_type_name(), $sformatf("write register %s.%s failed", block_name, reg_name))
+    `uvm_error(get_type_name(), $sformatf("[%s] write register %s.%s failed", path, block_name, reg_name))
 endtask
 
-task env_config::get_reg_value(output bit[31:0] data,
-                               input  string    reg_name,
-						       input  string    block_name);
+task env_config::get_reg_value(output bit[31:0]  data,
+                               input  string     reg_name,
+						       input  string     block_name,
+                               input  uvm_path_e path = UVM_FRONTDOOR);
   uvm_reg_block block    ;
   uvm_reg       register ;
   uvm_status_e  status   ;
@@ -74,12 +79,12 @@ task env_config::get_reg_value(output bit[31:0] data,
   block    = regm.get_block_by_name(block_name);
   register = block.get_reg_by_name(reg_name);
 
-  register.read(status, data);
+  register.read(status, data, path);
 
   if (status == UVM_IS_OK)
-    `uvm_info(get_type_name(), $sformatf("read 0x%8h from register %s.%s", data, block_name, reg_name), UVM_LOW)
+    `uvm_info(get_type_name(), $sformatf("[%s] read 0x%8h from register %s.%s", path, data, block_name, reg_name), UVM_LOW)
   else
-    `uvm_error(get_type_name(), $sformatf("read register %s.%s failed", block_name, reg_name))
+    `uvm_error(get_type_name(), $sformatf("[%s] read register %s.%s failed", path, block_name, reg_name))
 endtask
 
 task env_config::set_field_value(bit[31:0] data,
@@ -113,10 +118,11 @@ task env_config::set_field_value(bit[31:0] data,
     `uvm_error(get_type_name(), $sformatf("write field %s.%s.%s failed", block_name, reg_name, field_name))
 endtask
 
-task env_config::get_field_value(output bit[31:0] data,
-                                 input  string    field_name,
-                                 input  string    reg_name,
-                                 input  string    block_name);
+task env_config::get_field_value(output bit[31:0]  data,
+                                 input  string     field_name,
+                                 input  string     reg_name,
+                                 input  string     block_name,
+                                 input  uvm_path_e path = UVM_FRONTDOOR);
   uvm_reg_block block    ;
   uvm_reg       register ;
   uvm_reg_field field    ;
@@ -126,12 +132,12 @@ task env_config::get_field_value(output bit[31:0] data,
   register = block.get_reg_by_name(reg_name);
   field    = register.get_field_by_name(field_name);
 
-  field.read(status, data);
+  field.read(status, data, path);
 
   if (status == UVM_IS_OK)
-    `uvm_info(get_type_name(), $sformatf("read 0x%8h from field %s.%s.%s", data, block_name, reg_name, field_name), UVM_LOW)
+    `uvm_info(get_type_name(), $sformatf("[%s] read 0x%8h from field %s.%s.%s", path, data, block_name, reg_name, field_name), UVM_LOW)
   else
-    `uvm_error(get_type_name(), $sformatf("read field %s.%s.%s failed", block_name, reg_name, field_name))
+    `uvm_error(get_type_name(), $sformatf("[%s] read field %s.%s.%s failed", path, block_name, reg_name, field_name))
 endtask
 
 function string env_config::get_memory_hdl(memory_t  mem_type,

@@ -22,12 +22,12 @@ function void top_reg_model::build();
   default_map = create_map("default_map", 0, 4, UVM_LITTLE_ENDIAN, 1);
 
   dma = ral_block_dma::type_id::create("dma");
-  dma.configure(this, "");
+  dma.configure(this, "x_pdu_top.x_main_bus_top.x_dmac_top.x_reg_ctrl");
   dma.build();
   default_map.add_submap(dma.default_map, `DMA_REG_BASE_ADDR);
 
   wdt = ral_block_wdt::type_id::create("wdt");
-  wdt.configure(this, "");
+  wdt.configure(this, "x_pdu_top.x_sub_apb0_top.x_wdt_sec_top.x_wdt.U_WDT_REGFILE");
   wdt.build();
   default_map.add_submap(wdt.default_map, `WDT_REG_BASE_ADDR);
 

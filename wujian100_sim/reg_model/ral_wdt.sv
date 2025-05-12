@@ -61,14 +61,14 @@ endclass : ral_reg_WDT_current_value
 
 
 class ral_reg_WDT_restart extends uvm_reg;
-	uvm_reg_field CRR;
+	rand uvm_reg_field CRR;
 
 	function new(string name = "WDT_restart");
 		super.new(name, 32,build_coverage(UVM_NO_COVERAGE));
 	endfunction: new
    virtual function void build();
       this.CRR = uvm_reg_field::type_id::create("CRR",,get_full_name());
-      this.CRR.configure(this, 8, 0, "RO", 0, 1'b0, 1, 0, 1);
+      this.CRR.configure(this, 8, 0, "WO", 0, 1'b0, 1, 0, 1);
    endfunction: build
 
 	`uvm_object_utils(ral_reg_WDT_restart)
@@ -127,8 +127,8 @@ class ral_block_wdt extends uvm_reg_block;
 	rand uvm_reg_field TOP_INIT;
 	uvm_reg_field WDT_current_value_CCV;
 	uvm_reg_field CCV;
-	uvm_reg_field WDT_restart_CRR;
-	uvm_reg_field CRR;
+	rand uvm_reg_field WDT_restart_CRR;
+	rand uvm_reg_field CRR;
 	uvm_reg_field WDT_int_status_ISR;
 	uvm_reg_field ISR;
 	uvm_reg_field WDT_int_clr_ICR;
@@ -144,8 +144,9 @@ class ral_block_wdt extends uvm_reg_block;
       this.WDT_CR.configure(this, null, "");
       this.WDT_CR.build();
          this.WDT_CR.add_hdl_path('{
-
-            '{"WDT_CR", -1, -1}
+            '{"wdt_cr_ir", 0, 1},
+            '{"wdt_cr_ir", 1, 1},
+            '{"wdt_cr_ir", 2, 3}
          });
       this.default_map.add_reg(this.WDT_CR, `UVM_REG_ADDR_WIDTH'h0, "RW", 0);
 		this.WDT_CR_WDT_EN = this.WDT_CR.WDT_EN;
@@ -158,8 +159,8 @@ class ral_block_wdt extends uvm_reg_block;
       this.WDT_time_out.configure(this, null, "");
       this.WDT_time_out.build();
          this.WDT_time_out.add_hdl_path('{
-
-            '{"WDT_time_out", -1, -1}
+            '{"wdt_torr_ir", 0, 4},
+            '{"wdt_torr_ir", 4, 4}
          });
       this.default_map.add_reg(this.WDT_time_out, `UVM_REG_ADDR_WIDTH'h4, "RW", 0);
 		this.WDT_time_out_TOP = this.WDT_time_out.TOP;
@@ -170,8 +171,7 @@ class ral_block_wdt extends uvm_reg_block;
       this.WDT_current_value.configure(this, null, "");
       this.WDT_current_value.build();
          this.WDT_current_value.add_hdl_path('{
-
-            '{"WDT_current_value", -1, -1}
+            '{"int_cnt", 0, 32}
          });
       this.default_map.add_reg(this.WDT_current_value, `UVM_REG_ADDR_WIDTH'h8, "RO", 0);
 		this.WDT_current_value_CCV = this.WDT_current_value.CCV;
@@ -179,10 +179,6 @@ class ral_block_wdt extends uvm_reg_block;
       this.WDT_restart = ral_reg_WDT_restart::type_id::create("WDT_restart",,get_full_name());
       this.WDT_restart.configure(this, null, "");
       this.WDT_restart.build();
-         this.WDT_restart.add_hdl_path('{
-
-            '{"WDT_restart", -1, -1}
-         });
       this.default_map.add_reg(this.WDT_restart, `UVM_REG_ADDR_WIDTH'hC, "RW", 0);
 		this.WDT_restart_CRR = this.WDT_restart.CRR;
 		this.CRR = this.WDT_restart.CRR;
@@ -190,8 +186,7 @@ class ral_block_wdt extends uvm_reg_block;
       this.WDT_int_status.configure(this, null, "");
       this.WDT_int_status.build();
          this.WDT_int_status.add_hdl_path('{
-
-            '{"WDT_int_status", -1, -1}
+            '{"wdt_int", 0, 1}
          });
       this.default_map.add_reg(this.WDT_int_status, `UVM_REG_ADDR_WIDTH'h10, "RW", 0);
 		this.WDT_int_status_ISR = this.WDT_int_status.ISR;
@@ -199,10 +194,6 @@ class ral_block_wdt extends uvm_reg_block;
       this.WDT_int_clr = ral_reg_WDT_int_clr::type_id::create("WDT_int_clr",,get_full_name());
       this.WDT_int_clr.configure(this, null, "");
       this.WDT_int_clr.build();
-         this.WDT_int_clr.add_hdl_path('{
-
-            '{"WDT_int_clr", -1, -1}
-         });
       this.default_map.add_reg(this.WDT_int_clr, `UVM_REG_ADDR_WIDTH'h14, "RW", 0);
 		this.WDT_int_clr_ICR = this.WDT_int_clr.ICR;
 		this.ICR = this.WDT_int_clr.ICR;
