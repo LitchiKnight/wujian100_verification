@@ -10,7 +10,7 @@ class memory_read_sequence extends yuu_ahb_master_sequence_base;
   `uvm_object_utils_begin(memory_read_sequence)
     `uvm_field_int      (rd_addr, UVM_ALL_ON)
     `uvm_field_int      (rd_len , UVM_ALL_ON)
-	`uvm_field_array_int(rd_data, UVM_ALL_ON)
+    `uvm_field_array_int(rd_data, UVM_ALL_ON)
   `uvm_object_utils_end
 
   function new(string name = "memory_read_sequence");
