@@ -32,7 +32,7 @@ task dma_channel_test::run_dma_test();
       ch_id     == ch                             ;
       src_addr  == `DATA_SRAM_START_ADDR+ch*'h100 ;
       dst_addr  == `INST_SRAM_START_ADDR+ch*'h100 ;
-      byte_len  == 64                             ;
+      byte_len  == 63                             ;
     };
     seq.start(vseqr);
 

@@ -30,7 +30,7 @@ task dma_parallel_test::run_dma_test();
       seq1.randomize() with {
         src_addr  == `DATA_SRAM_START_ADDR ;
         dst_addr  == `INST_SRAM_START_ADDR ;
-        byte_len  == 64                    ;
+        byte_len  == 63                    ;
       };
       seq1.start(vseqr);
     end
@@ -44,7 +44,7 @@ task dma_parallel_test::run_dma_test();
       seq2.randomize() with {
         src_addr  == `DATA_SRAM_START_ADDR+'h100 ;
         dst_addr  == `INST_SRAM_START_ADDR+'h100 ;
-        byte_len  == 64                          ;
+        byte_len  == 63                          ;
       };
       seq2.start(vseqr);
     end
