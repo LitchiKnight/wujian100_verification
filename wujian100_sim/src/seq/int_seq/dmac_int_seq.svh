@@ -29,7 +29,7 @@ task dmac_int_seq::body();
         end
       end
     end
-  end while(p_sequencer.env_cfg.int_cfg.vif.interrupt != 0);
+  end while(p_sequencer.env_cfg.int_cfg.vif.interrupt[32] != 0);
 
   dmac_int_ev.trigger();
 endtask

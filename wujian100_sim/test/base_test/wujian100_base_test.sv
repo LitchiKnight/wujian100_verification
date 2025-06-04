@@ -11,8 +11,8 @@ class wujian100_base_test extends uvm_test;
   virtual spi_interface            spi_vif      ;
 
           env_config               env_cfg      ;
-	  top_env                  env          ;
-	  virtual_sequencer        vseqr        ;
+          top_env                  env          ;
+          virtual_sequencer        vseqr        ;
           uvm_event_pool           events       ;
 
   function new(string name = "wujian100_base_test", uvm_component parent);

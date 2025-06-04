@@ -30,6 +30,8 @@ package sim_pkg;
   `include "memory_write_sequence.svh"
   `include "memory_read_sequence.svh"
 
+  `include "dma_launch_seq.svh"
+
   `include "wdt_int_seq.svh"
   `include "tim0_tim1_int_seq.svh"
   `include "rtc_int_seq.svh"
@@ -37,6 +39,4 @@ package sim_pkg;
   `include "uart_rx_int_seq.svh"
   `include "spi_rx_int_seq.svh"
   `include "dmac_int_seq.svh"
-
-  `include "dma_launch_seq.svh"
-endpackage
+  endpackage
