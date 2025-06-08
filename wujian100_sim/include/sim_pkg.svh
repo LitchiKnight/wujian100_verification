@@ -33,6 +33,7 @@ package sim_pkg;
   `include "dma_config_base_sequence.svh"
   `include "usi_config_base_sequence.svh"
   `include "i2c_config_base_sequence.svh"
+  `include "uart_config_base_sequence.svh"
 
   `include "wdt_int_seq.svh"
   `include "tim0_tim1_int_seq.svh"
