@@ -17,11 +17,11 @@ task i2c_rx_int_seq::body();
 
   i2c_rx_int_ev = p_sequencer.env_cfg.events.get("i2c_rx_int_ev");
   p_sequencer.env_cfg.get_field_value(sta, "RX_THOLD", "INTR_STA", "usi0");
-  p_sequencer.env_cfg.set_field_value(1'b0, "RX_THOLD_MASK", "INTR_MASK", "usi0");
+  p_sequencer.env_cfg.set_field_value(1'b0, "RX_THOLD_MASK", "INTR_UNMASK", "usi0");
   p_sequencer.env_cfg.get_field_value(num, "RX_NUM", "FIFO_STA", "usi0");
   read_io_data(num);
   p_sequencer.env_cfg.set_field_value(1'b1, "RX_THOLD_CLR", "INTR_CLR", "usi0");
-  p_sequencer.env_cfg.set_field_value(1'b1, "RX_THOLD_MASK", "INTR_MASK", "usi0");
+  p_sequencer.env_cfg.set_field_value(1'b1, "RX_THOLD_MASK", "INTR_UNMASK", "usi0");
   i2c_rx_int_ev.trigger();
 endtask
 

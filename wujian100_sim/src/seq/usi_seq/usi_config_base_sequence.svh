@@ -179,6 +179,6 @@ task usi_config_base_sequence::body();
   p_sequencer.env_cfg.set_reg_value({30'h0, mode_sel}, "MODE_SEL", $sformatf("usi%0d", usi_id));
   p_sequencer.env_cfg.set_reg_value({15'h0, th_mode, 5'h0, rx_fifo_th, 5'h0, tx_fifo_th}, "INTR_CTRL", $sformatf("usi%0d", usi_id));
   p_sequencer.env_cfg.set_reg_value({13'h0, spi_stop_en, i2c_aerr_en, i2cs_gcall_en, i2cm_lose_arbi_en, i2c_nack_en, i2c_stop_en, uart_perr_en, uart_rx_stop_en, uart_tx_stop_en, rx_werr_en, rx_rerr_en, rx_full_en, rx_empty_en, rx_thold_en, tx_werr_en, tx_rerr_en, tx_full_en, tx_empty_en, tx_thold_en}, "INTR_EN", $sformatf("usi%0d", usi_id));
-  p_sequencer.env_cfg.set_reg_value({13'h0, spi_stop_mask, i2c_aerr_mask, i2cs_gcall_mask, i2cm_lose_arbi_mask, i2c_nack_mask, i2c_stop_mask, uart_perr_mask, uart_rx_stop_mask, uart_tx_stop_mask, rx_werr_mask, rx_rerr_mask, rx_full_mask, rx_empty_mask, rx_thold_mask, tx_werr_mask, tx_rerr_mask, tx_full_mask, tx_empty_mask, tx_thold_mask}, "INTR_MASK", $sformatf("usi%0d", usi_id));
+  p_sequencer.env_cfg.set_reg_value({13'h0, spi_stop_mask, i2c_aerr_mask, i2cs_gcall_mask, i2cm_lose_arbi_mask, i2c_nack_mask, i2c_stop_mask, uart_perr_mask, uart_rx_stop_mask, uart_tx_stop_mask, rx_werr_mask, rx_rerr_mask, rx_full_mask, rx_empty_mask, rx_thold_mask, tx_werr_mask, tx_rerr_mask, tx_full_mask, tx_empty_mask, tx_thold_mask}, "INTR_UNMASK", $sformatf("usi%0d", usi_id));
   p_sequencer.env_cfg.set_reg_value({28'h0, rx_fifo_en, tx_fifo_en, fm_en, usi_en}, "USI_CTRL",$sformatf("usi%0d", usi_id));
 endtask
