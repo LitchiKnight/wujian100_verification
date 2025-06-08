@@ -28,6 +28,7 @@ class uart_config_base_sequence extends usi_config_base_sequence;
 endclass
 
 task uart_config_base_sequence::body();
+  p_sequencer.env_cfg.set_reg_value({8'h0, clk_div0}, "CLK_DIV0", $sformatf("usi%0d", usi_id));
   p_sequencer.env_cfg.set_reg_value({26'h0, eps, pen, pbit, dbit}, "UART_CTRL", $sformatf("usi%0d", usi_id));
   super.body();
 endtask
