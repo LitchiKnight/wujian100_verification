@@ -17,20 +17,29 @@ function void spi_slave_smoke_test::modify_config();
 endfunction
 
 task spi_slave_smoke_test::run_smoke_test();
-  spi_tx_base_sequence spi_tx_seq;
-
-  write_field   (2'h2, "MODE_SEL"     , "MODE_SEL" , "usi2");
-  write_field   (1'b0, "MS_MODE"      , "SPI_MODE" , "usi2");
-  write_field   (2'h2, "TMOD"         , "SPI_CTRL" , "usi2");
-  write_field   (1'b1, "CPOL"         , "SPI_CTRL" , "usi2");
-  write_field   (1'b1, "CPHA"         , "SPI_CTRL" , "usi2");
-  write_field   (4'hA, "DATA_SIZE"    , "SPI_CTRL" , "usi2");
-  write_field   (1'b1, "TH_MODE"      , "INTR_CTRL", "usi2");
-  write_field   (3'h2, "RX_FIFO_TH"   , "INTR_CTRL", "usi2");
-  write_field   (1'b1, "RX_THOLD_EN"  , "INTR_EN"  , "usi2");
-  write_field   (1'b1, "RX_THOLD_MASK", "INTR_MASK", "usi2");
-  write_register(4'hB                 , "USI_CTRL" , "usi2");
-
+  spi_config_base_sequence spi_cfg_seq;
+  spi_tx_base_sequence     spi_tx_seq ;
+  
+  spi_cfg_seq = spi_config_base_sequence::type_id::create("spi_cfg_seq");
+  spi_cfg_seq.randomize() with {
+    usi_id        == 2    ;
+    usi_en        == 1    ;
+    fm_en         == 1    ;
+    tx_fifo_en    == 1    ;
+    rx_fifo_en    == 1    ;
+    mode_sel      == 2    ;
+    ms_mode       == 0    ;
+    tmod          == 2    ;
+    cpol          == 1    ;
+    cpha          == 1    ;
+    data_size     == 'hA  ;
+    th_mode       == 1    ;
+    rx_fifo_th    == 2    ;
+    rx_thold_en   == 1    ;
+    rx_thold_mask == 1    ;
+  };
+  spi_cfg_seq.start(vseqr);
+  
   #10us;
 
   spi_tx_seq = spi_tx_base_sequence::type_id::create("spi_tx_seq");

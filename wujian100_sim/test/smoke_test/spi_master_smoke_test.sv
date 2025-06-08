@@ -22,13 +22,23 @@ function void spi_master_smoke_test::modify_config();
 endfunction
 
 task spi_master_smoke_test::run_smoke_test();
-  write_field   (2'h2 , "MODE_SEL"     , "MODE_SEL" , "usi2");
-  write_field   (24'h2, "CLK_DIV0"     , "CLK_DIV0" , "usi2");
-  write_field   (1'b1 , "MS_MODE"      , "SPI_MODE" , "usi2");
-  write_field   (2'h1 , "TMOD"         , "SPI_CTRL" , "usi2");
-  write_field   (1'b1 , "NSS_TOGGLE"   , "SPI_CTRL" , "usi2");
-  write_field   (1'b1 , "NSS_CTRL"     , "SPI_CTRL" , "usi2");
-  write_register(4'h7                  , "USI_CTRL" , "usi2");
+  spi_config_base_sequence spi_cfg_seq;
+
+  spi_cfg_seq = spi_config_base_sequence::type_id::create("spi_cfg_seq");
+  spi_cfg_seq.randomize() with {
+    usi_id     == 2    ;
+    usi_en     == 1    ;
+    fm_en      == 1    ;
+    tx_fifo_en == 1    ;
+    rx_fifo_en == 1    ;
+    mode_sel   == 2    ;
+    clk_div0   == 2    ;
+    ms_mode    == 1    ;
+    tmod       == 1    ;
+    nss_toggle == 1    ;
+    nss_ctrl   == 1    ;
+  };
+  spi_cfg_seq.start(vseqr);
 
   write_field(8'ha5, "DATA", "DATA_FIFO", "usi2");
   write_field(8'ha6, "DATA", "DATA_FIFO", "usi2");

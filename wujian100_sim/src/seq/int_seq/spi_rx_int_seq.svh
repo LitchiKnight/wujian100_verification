@@ -16,13 +16,13 @@ task spi_rx_int_seq::body();
 
   spi_rx_int_ev = p_sequencer.env_cfg.events.get("spi_rx_int_ev");
   p_sequencer.env_cfg.get_field_value(sta, "RX_THOLD", "INTR_STA", "usi2");
-  p_sequencer.env_cfg.set_field_value(1'b0, "RX_THOLD_MASK", "INTR_MASK", "usi2");
+  p_sequencer.env_cfg.set_field_value(1'b0, "RX_THOLD_MASK", "INTR_UNMASK", "usi2");
   p_sequencer.env_cfg.get_field_value(num, "RX_NUM", "FIFO_STA", "usi2");
   for (int i = 0; i < num; i++) begin
 	bit[31:0] rdata;
 	p_sequencer.env_cfg.get_field_value(rdata, "DATA", "DATA_FIFO", "usi2");
   end
   p_sequencer.env_cfg.set_field_value(1'b1, "RX_THOLD_CLR", "INTR_CLR", "usi2");
-  p_sequencer.env_cfg.set_field_value(1'b1, "RX_THOLD_MASK", "INTR_MASK", "usi2");
+  p_sequencer.env_cfg.set_field_value(1'b1, "RX_THOLD_MASK", "INTR_UNMASK", "usi2");
   spi_rx_int_ev.trigger();
 endtask
