@@ -23,14 +23,21 @@ function void i2c_master_smoke_test::modify_config();
 endfunction
 
 task i2c_master_smoke_test::run_smoke_test();
-  
-  write_field   (2'b1   , "MODE_SEL", "MODE_SEL" , "usi0");
-  write_field   (24'h15 , "CLK_DIV0", "CLK_DIV0" , "usi0");
-  write_field   (24'h14 , "CLK_DIV1", "CLK_DIV1" , "usi0");
-  write_field   (1'b1   , "MS_MODE" , "I2C_MODE" , "usi0");
-  write_field   (10'h12A, "I2C_ADDR", "I2C_ADDR" , "usi0");
-  write_register(32'h3  ,             "I2CM_CTRL", "usi0");
-  write_register(4'hF   ,             "USI_CTRL" , "usi0");
+  i2c_config_base_sequecne i2c_cfg_seq;
+
+  i2c_cfg_seq = i2c_config_base_sequecne::type_id::create("i2c_cfg_seq");
+  i2c_cfg_seq.randomize() with {
+    usi_id     == 0    ;
+    usi_en     == 1    ;
+    fm_en      == 1    ;
+    tx_fifo_en == 1    ;
+    rx_fifo_en == 1    ;
+    mode_sel   == 1    ;
+    clk_div0   == 'h15 ;
+    clk_div1   == 'h14 ;
+    i2c_addr   == 'h12A;
+  };
+  i2c_cfg_seq.start(vseqr);
   
   write_field(8'ha5, "DATA", "DATA_FIFO", "usi0");
   write_field(8'ha6, "DATA", "DATA_FIFO", "usi0");

@@ -80,6 +80,7 @@ $TB_PATH/src/uvc/spi_agent/spi_package.sv
 +incdir+$TB_PATH/src/seq/mem_seq
 +incdir+$TB_PATH/src/seq/int_seq
 +incdir+$TB_PATH/src/seq/dma_seq
++incdir+$TB_PATH/src/seq/usi_seq
 +incdir+$TB_PATH/env
 
 //-------------------------------------

@@ -44,18 +44,24 @@ class i2c_rx_int_with_dma_seq extends i2c_rx_int_seq;
 endclass
 
 task i2c_rx_int_with_dma_seq::read_io_data(int num);
-  dma_launch_seq seq    ;
-  uvm_event dmac_int_ev ;
+  dma_config_base_sequence dma_cfg_seq ;
+  uvm_event                dmac_int_ev ;
 
   dmac_int_ev = p_sequencer.env_cfg.events.get("dmac_int_ev");
   p_sequencer.env_cfg.set_reg_value(32'h1, "DMACCFG", "dma");
-  seq = dma_launch_seq::type_id::create("seq");
-  seq.randomize() with {
+  dma_cfg_seq = dma_config_base_sequence::type_id::create("dma_cfg_seq");
+  dma_cfg_seq.randomize() with {
     src_addr  == `USI0_REG_BASE_ADDR+'h8 ;
     dst_addr  == `DATA_SRAM_START_ADDR   ;
     byte_len  == num*4-1                 ; // 4096byte = 1024word
     sinc      >  1                       ;
+    src_width == 2                       ;
+    dst_width == 2                       ;
+    trg_tmdc  == 2                       ;
+    int_en    == 1                       ;
+    masktfr   == 1                       ;
+    soft_req  == 1                       ;
   };
-  seq.start(p_sequencer);
+  dma_cfg_seq.start(p_sequencer);
   dmac_int_ev.wait_trigger();
 endtask

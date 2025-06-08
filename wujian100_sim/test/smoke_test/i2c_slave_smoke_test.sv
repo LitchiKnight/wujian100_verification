@@ -22,18 +22,27 @@ function void i2c_slave_smoke_test::modify_config();
 endfunction
 
 task i2c_slave_smoke_test::run_smoke_test();
+  i2c_config_base_sequecne i2c_cfg_seq   ;
   i2c_master_sequence_base i2c_mst_wr_seq;
   i2c_master_sequence_base i2c_mst_rd_seq;
   bit[31:0] rdata;
 
-  write_field   (2'b1   , "MODE_SEL"     , "MODE_SEL" , "usi0");
-  write_field   (1'b0   , "MS_MODE"      , "I2C_MODE" , "usi0");
-  write_field   (10'h3C , "I2C_ADDR"     , "I2C_ADDR" , "usi0");
-  write_field   (1'b1   , "TH_MODE"      , "INTR_CTRL", "usi0");
-  write_field   (3'h2   , "RX_FIFO_TH"   , "INTR_CTRL", "usi0");
-  write_field   (1'b1   , "RX_THOLD_EN"  , "INTR_EN"  , "usi0");
-  write_field   (1'b1   , "RX_THOLD_MASK", "INTR_MASK", "usi0");
-  write_register(4'hF   ,                  "USI_CTRL" , "usi0");
+  i2c_cfg_seq = i2c_config_base_sequecne::type_id::create("i2c_cfg_seq");
+  i2c_cfg_seq.randomize() with {
+    usi_id        == 0    ;
+    usi_en        == 1    ;
+    fm_en         == 1    ;
+    tx_fifo_en    == 1    ;
+    rx_fifo_en    == 1    ;
+    mode_sel      == 1    ;
+    ms_mode       == 0    ;
+    i2c_addr      == 'h3C ;
+    th_mode       == 1    ;
+    rx_fifo_th    == 2    ;
+    rx_thold_en   == 1    ;
+    rx_thold_mask == 1    ;
+  };
+  i2c_cfg_seq.start(vseqr);
 
   i2c_mst_wr_seq = i2c_master_sequence_base::type_id::create("i2c_mst_wr_seq");
   i2c_mst_wr_seq.randomize() with {
