@@ -27,7 +27,6 @@ task spi_slave_smoke_test::run_smoke_test();
     fm_en         == 1    ;
     tx_fifo_en    == 1    ;
     rx_fifo_en    == 1    ;
-    mode_sel      == 2    ;
     ms_mode       == 0    ;
     tmod          == 2    ;
     cpol          == 1    ;

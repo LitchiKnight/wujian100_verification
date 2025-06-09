@@ -25,6 +25,10 @@ class spi_config_base_sequence extends usi_config_base_sequence;
     super.new(name);
   endfunction
 
+  constraint default_mode_sel_c {
+    soft mode_sel == 2;
+  }
+
   constraint default_spi_mode_c {
     soft ms_mode == 1;
   }

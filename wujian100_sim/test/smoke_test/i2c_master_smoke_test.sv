@@ -32,7 +32,6 @@ task i2c_master_smoke_test::run_smoke_test();
     fm_en      == 1    ;
     tx_fifo_en == 1    ;
     rx_fifo_en == 1    ;
-    mode_sel   == 1    ;
     clk_div0   == 'h15 ;
     clk_div1   == 'h14 ;
     i2c_addr   == 'h12A;

@@ -17,6 +17,10 @@ class uart_config_base_sequence extends usi_config_base_sequence;
     `uvm_field_int(eps , UVM_ALL_ON)
   `uvm_object_utils_end
 
+  constraint default_mode_sel_c {
+    mode_sel == 0;
+  }
+
   constraint default_uart_ctrl_c {
     dbit == 3;
     pbit == 0;

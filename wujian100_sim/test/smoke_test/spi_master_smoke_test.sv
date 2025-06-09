@@ -31,7 +31,6 @@ task spi_master_smoke_test::run_smoke_test();
     fm_en      == 1    ;
     tx_fifo_en == 1    ;
     rx_fifo_en == 1    ;
-    mode_sel   == 2    ;
     clk_div0   == 2    ;
     ms_mode    == 1    ;
     tmod       == 1    ;

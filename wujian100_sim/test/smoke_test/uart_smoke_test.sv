@@ -35,7 +35,6 @@ task uart_smoke_test::run_smoke_test();
     fm_en         == 1    ;
     tx_fifo_en    == 1    ;
     rx_fifo_en    == 1    ;
-    mode_sel      == 0    ;
     clk_div0      == 24'h9;
     th_mode       == 1    ;
     rx_fifo_th    == 2    ;

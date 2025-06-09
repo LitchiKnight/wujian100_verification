@@ -34,7 +34,6 @@ task i2c_slave_smoke_test::run_smoke_test();
     fm_en         == 1    ;
     tx_fifo_en    == 1    ;
     rx_fifo_en    == 1    ;
-    mode_sel      == 1    ;
     ms_mode       == 0    ;
     i2c_addr      == 'h3C ;
     th_mode       == 1    ;

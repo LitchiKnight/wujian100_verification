@@ -31,6 +31,10 @@ class i2c_config_base_sequecne extends usi_config_base_sequence;
     `uvm_field_int(i2c_hold  , UVM_ALL_ON)
   `uvm_object_utils_end
 
+  constraint default_mode_sel_c {
+    soft mode_sel == 1;
+  }
+
   constraint default_i2c_mode_c {
     soft ms_mode == 1;
   }
