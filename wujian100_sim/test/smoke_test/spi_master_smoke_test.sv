@@ -22,7 +22,8 @@ function void spi_master_smoke_test::modify_config();
 endfunction
 
 task spi_master_smoke_test::run_smoke_test();
-  spi_config_base_sequence spi_cfg_seq;
+  spi_config_base_sequence spi_cfg_seq  ;
+  usi_set_data_sequence    set_data_seq ;
 
   spi_cfg_seq = spi_config_base_sequence::type_id::create("spi_cfg_seq");
   spi_cfg_seq.randomize() with {
@@ -39,10 +40,11 @@ task spi_master_smoke_test::run_smoke_test();
   };
   spi_cfg_seq.start(vseqr);
 
-  write_field(8'ha5, "DATA", "DATA_FIFO", "usi2");
-  write_field(8'ha6, "DATA", "DATA_FIFO", "usi2");
-  write_field(8'ha7, "DATA", "DATA_FIFO", "usi2");
-  write_field(8'ha8, "DATA", "DATA_FIFO", "usi2");
+  set_data_seq = usi_set_data_sequence::type_id::create("set_data_seq");
+  set_data_seq.randomize() with {
+    usi_id == 2;
+  };
+  set_data_seq.start(vseqr);
 
   #10us;
 endtask

@@ -25,8 +25,9 @@ function void uart_smoke_test::modify_config();
 endfunction
 
 task uart_smoke_test::run_smoke_test();
-  uart_config_base_sequence uart_cfg_seq;
-  uart_tx_base_sequence     uart_tx_seq ;
+  uart_config_base_sequence uart_cfg_seq ;
+  uart_tx_base_sequence     uart_tx_seq  ;
+  usi_set_data_sequence     set_data_seq ;
 
   uart_cfg_seq = uart_config_base_sequence::type_id::create("uart_cfg_seq");
   uart_cfg_seq.randomize() with {
@@ -43,23 +44,25 @@ task uart_smoke_test::run_smoke_test();
   };
   uart_cfg_seq.start(vseqr);
 
-  write_field(8'h15, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h16, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h17, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h18, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h1A, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h1B, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h1C, "DATA", "DATA_FIFO", "usi1");
-  write_field(8'h1D, "DATA", "DATA_FIFO", "usi1");
-
-  uart_tx_seq = uart_tx_base_sequence::type_id::create("uart_tx_seq");
-  uart_tx_seq.randomize() with {
-    len == 20;
-    foreach(data[i]) {
-      data[i][7:5] == 0;
-    }
-  };
-  uart_tx_seq.start(vseqr.uart_seqr);
+  fork
+    begin
+      set_data_seq = usi_set_data_sequence::type_id::create("set_data_seq");
+      set_data_seq.randomize() with {
+        usi_id == 1;
+      };
+      set_data_seq.start(vseqr);
+    end
+    begin
+      uart_tx_seq = uart_tx_base_sequence::type_id::create("uart_tx_seq");
+      uart_tx_seq.randomize() with {
+        len == 20;
+        foreach(data[i]) {
+          data[i][7:5] == 0;
+        }
+      };
+      uart_tx_seq.start(vseqr.uart_seqr);
+    end
+  join
 
   #10us;
 endtask

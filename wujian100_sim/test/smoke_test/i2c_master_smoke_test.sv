@@ -23,7 +23,8 @@ function void i2c_master_smoke_test::modify_config();
 endfunction
 
 task i2c_master_smoke_test::run_smoke_test();
-  i2c_config_base_sequecne i2c_cfg_seq;
+  i2c_config_base_sequecne i2c_cfg_seq  ;
+  usi_set_data_sequence    set_data_seq ;
 
   i2c_cfg_seq = i2c_config_base_sequecne::type_id::create("i2c_cfg_seq");
   i2c_cfg_seq.randomize() with {
@@ -37,11 +38,12 @@ task i2c_master_smoke_test::run_smoke_test();
     i2c_addr   == 'h12A;
   };
   i2c_cfg_seq.start(vseqr);
-  
-  write_field(8'ha5, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'ha6, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'ha7, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'ha8, "DATA", "DATA_FIFO", "usi0");
+
+  set_data_seq = usi_set_data_sequence::type_id::create("set_data_seq");
+  set_data_seq.randomize() with {
+    usi_id == 0;
+  };
+  set_data_seq.start(vseqr);
 
   #20us;
 endtask
