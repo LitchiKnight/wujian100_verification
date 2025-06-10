@@ -25,7 +25,7 @@ task i2c_slave_smoke_test::run_smoke_test();
   i2c_config_base_sequecne i2c_cfg_seq   ;
   i2c_master_sequence_base i2c_mst_wr_seq;
   i2c_master_sequence_base i2c_mst_rd_seq;
-  bit[31:0] rdata;
+  usi_set_data_sequence    set_data_seq  ;
 
   i2c_cfg_seq = i2c_config_base_sequecne::type_id::create("i2c_cfg_seq");
   i2c_cfg_seq.randomize() with {
@@ -55,23 +55,19 @@ task i2c_slave_smoke_test::run_smoke_test();
   // #10us;
   repeat(200)
     ahb_mst0_vif.wait_cycle();
-  
 
-  write_field(8'h12, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'h34, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'h56, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'h78, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'h9A, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'hBC, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'hDE, "DATA", "DATA_FIFO", "usi0");
-  write_field(8'hF0, "DATA", "DATA_FIFO", "usi0");
+  set_data_seq = usi_set_data_sequence::type_id::create("set_data_seq");
+  set_data_seq.randomize() with {
+    usi_id == 0;
+  };
+  set_data_seq.start(vseqr);
 
   i2c_mst_rd_seq = i2c_master_sequence_base::type_id::create("i2c_mst_rd_seq");
   i2c_mst_rd_seq.randomize() with {
-    addr_mode == I2C_ADDR_7BIT ;
-    addr      == 10'h3C        ;
-    len       == 8             ;
-    direction == I2C_READ      ;
+    addr_mode == I2C_ADDR_7BIT    ;
+    addr      == 10'h3C           ;
+    len       == set_data_seq.len ;
+    direction == I2C_READ         ;
   };
   i2c_mst_rd_seq.start(vseqr.i2c_mst_seqr);
   foreach(i2c_mst_rd_seq.ret[i])

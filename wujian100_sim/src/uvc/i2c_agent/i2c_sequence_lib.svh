@@ -119,8 +119,12 @@ task i2c_slave_sequence_base::body();
           `uvm_do_with(req, {cmd == I2C_SEND_ACK; data == 0;})
       end
       I2C_RCV_ACK: begin
-        if (matched && pre_cmd == I2C_RCV_DATA && direction == I2C_READ && !mon_item.data[0])
-          `uvm_do_with(req, {cmd == I2C_SEND_DATA;})
+        if (matched) begin
+          if (pre_cmd == I2C_RCV_DATA && direction == I2C_READ && !mon_item.data[0])
+            `uvm_do_with(req, {cmd == I2C_SEND_DATA;})
+        end
+        else
+          continue;
       end
       I2C_RCV_EOF: begin
         matched = 1'b0;

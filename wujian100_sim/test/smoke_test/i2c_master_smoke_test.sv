@@ -23,19 +23,23 @@ function void i2c_master_smoke_test::modify_config();
 endfunction
 
 task i2c_master_smoke_test::run_smoke_test();
-  i2c_config_base_sequecne i2c_cfg_seq  ;
-  usi_set_data_sequence    set_data_seq ;
+  i2c_config_base_sequecne i2c_cfg_seq     ;
+  usi_set_data_sequence    set_data_seq    ;
+  uvm_event                i2c_monitor_eof ;
 
+  i2c_monitor_eof = events.get("i2c_monitor_eof") ;
   i2c_cfg_seq = i2c_config_base_sequecne::type_id::create("i2c_cfg_seq");
   i2c_cfg_seq.randomize() with {
     usi_id     == 0    ;
     usi_en     == 1    ;
     fm_en      == 1    ;
     tx_fifo_en == 1    ;
-    rx_fifo_en == 1    ;
-    clk_div0   == 'h15 ;
-    clk_div1   == 'h14 ;
+    clk_div0   == 'h14 ;
+    clk_div1   == 'h15 ;
+    ms_mode    == 1    ;
     i2c_addr   == 'h12A;
+    addr_mode  == 1    ;
+    stop       == 1    ;
   };
   i2c_cfg_seq.start(vseqr);
 
@@ -44,6 +48,5 @@ task i2c_master_smoke_test::run_smoke_test();
     usi_id == 0;
   };
   set_data_seq.start(vseqr);
-
-  #20us;
+  i2c_monitor_eof.wait_trigger();
 endtask
